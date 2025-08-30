@@ -1,0 +1,37 @@
+# Very Good Analysis konfigürasyonu
+include: package:very_good_analysis/analysis_options.yaml
+
+# Analyzer ayarları
+analyzer:
+  # Exclude edilecek dosyalar/klasörler
+  exclude:
+    - "**/*.g.dart"
+    - "**/*.freezed.dart"
+    - "**/*.mocks.dart"
+    - "**/generated/**"
+    - "build/**"
+    - "ios/**"
+    - "android/**"
+    - "web/**"
+    - "windows/**"
+    - "linux/**"
+    - "macos/**"
+
+  # Güçlü mod etkinleştir
+  strong-mode:
+    implicit-casts: false
+    implicit-dynamic: false
+
+  # Language ayarları
+  language:
+    strict-casts: true
+    strict-inference: true
+    strict-raw-types: true
+
+# Linter kuralları
+linter:
+  rules:
+    # Very Good Analysis'de olmayan ama eklemek isteyebileceğiniz kurallar
+    avoid_print: true # print() kullanımını yasaklar
+    prefer_single_quotes: true # Tek tırnak kullanımını zorlar
+    public_member_api_docs: false # Public member dokümantasyonu zorunluluğunu kaldırır

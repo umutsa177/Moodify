@@ -1,0 +1,52 @@
+name: moodify
+description: "A new Flutter project."
+publish_to: "none"
+version: 1.0.0
+
+environment:
+  sdk: ^3.9.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # Network
+  dio: ^5.9.0
+
+  # Cache
+  hive_ce: ^2.11.3
+
+  # Core
+  equatable: ^2.0.7
+  kartal: ^4.2.0
+
+  # Icon
+  flutter_svg: ^2.2.0
+
+  # State Management
+  provider: ^6.1.5+1
+
+  # Supabase
+  supabase_flutter: ^2.10.0
+
+  cupertino_icons: ^1.0.8
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  very_good_analysis: ^9.0.0
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/icons/
+
+  fonts:
+    - family: Epilogue
+      fonts:
+        - asset: assets/fonts/Epilogue-Bold.ttf
+        - asset: assets/fonts/Epilogue-Medium.ttf
+        - asset: assets/fonts/Epilogue-Regular.ttf
+        - asset: assets/fonts/Epilogue-SemiBold.ttf
