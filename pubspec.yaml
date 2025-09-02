@@ -26,6 +26,9 @@ dependencies:
   # State Management
   provider: ^6.1.5+1
 
+  # Deep Link
+  url_launcher: ^6.3.2
+
   # Supabase
   supabase_flutter: ^2.10.0
 
