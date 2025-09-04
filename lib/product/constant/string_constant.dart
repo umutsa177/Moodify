@@ -21,4 +21,6 @@ final class StringConstant {
   static const String firstTermsText = 'By continuing, you agree to our ';
   static const String secondTermsText = 'Terms of Service';
   static const String seperateText = 'or';
+  static const String supabaseRedirectUri =
+      'com.umutsayar.moodify://oauth2redirect';
 }

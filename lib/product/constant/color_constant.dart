@@ -13,6 +13,7 @@ final class ColorConstant {
   static final Color navBarBackground = Colors.grey.shade200;
   static const Color facebookLoginBackground = Color(0xFF1877F2);
   static const Color transparent = Colors.transparent;
+  static const Color error = Colors.red;
 
   static const List<Color> backgroundColors = [
     Color(0xFFE8B5FF), // Açık pembe-mor

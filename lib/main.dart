@@ -1,14 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:moodify/feature/splash/view/splash_view.dart';
+import 'package:moodify/core/providers/auth_provider.dart';
+import 'package:moodify/core/router/app_router.dart';
 import 'package:moodify/product/constant/string_constant.dart';
 import 'package:moodify/product/initialize/app_start.dart';
 import 'package:moodify/product/initialize/app_theme.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await AppStart.init();
+  await Future.microtask(AppStart.init);
 
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => AuthProvider(),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -20,7 +27,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: StringConstant.appName,
       theme: AppTheme(context).theme,
-      home: const SplashView(),
+      routes: AppRouter.routes,
+      initialRoute: AppRouter.splash,
     );
   }
 }

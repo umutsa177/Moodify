@@ -23,9 +23,14 @@
             <!-- Deep link için -->
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="io.supabase.flutter" />
+
+                <!-- Supabase redirect URI -->
+                <data
+                    android:scheme="com.umutsayar.moodify"
+                    android:host="oauth2redirect" />
             </intent-filter>
         </activity>
         <meta-data
