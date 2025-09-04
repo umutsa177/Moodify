@@ -23,4 +23,6 @@ final class StringConstant {
   static const String seperateText = 'or';
   static const String supabaseRedirectUri =
       'com.umutsayar.moodify://oauth2redirect';
+
+  static String loading = 'Loading...';
 }

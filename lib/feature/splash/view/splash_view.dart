@@ -8,6 +8,14 @@ import 'package:moodify/product/constant/double_constant.dart';
 import 'package:moodify/product/constant/string_constant.dart';
 import 'package:provider/provider.dart';
 
+part '../widget/terms_text.dart';
+part '../widget/email_button.dart';
+part '../widget/splash_emoji_widget.dart';
+part '../widget/title_and_subtitle.dart';
+part '../widget/seperate_text.dart';
+part '../widget/facebook_login_button.dart';
+part '../widget/google_login_button.dart';
+
 class SplashView extends StatefulWidget {
   const SplashView({super.key});
 
@@ -86,244 +94,21 @@ class _SplashViewState extends State<SplashView> with SplashMixin {
                 child: Column(
                   children: [
                     context.sized.emptySizedHeightBoxHigh,
-
-                    // Title
-                    Column(
-                      children: [
-                        Padding(
-                          padding: context.padding.onlyTopHigh,
-                          child: Text(
-                            StringConstant.splashTitle,
-                            textAlign: TextAlign.center,
-                            style: context.general.textTheme.displayMedium
-                                ?.copyWith(
-                                  color: ColorConstant.primary,
-                                  fontWeight: FontWeight.w700,
-                                ),
-                          ),
-                        ),
-
-                        context.sized.emptySizedHeightBoxLow,
-
-                        // SubTitle
-                        Text(
-                          StringConstant.splashSubtitle,
-                          style: context.general.textTheme.bodyLarge?.copyWith(
-                            color: ColorConstant.primaryLight,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                      ],
-                    ),
-
+                    const _TitleAndSubtitle(),
                     context.sized.emptySizedHeightBoxNormal,
-
-                    // Google signIn button
-                    SizedBox(
-                      width: context.sized.dynamicWidth(.85),
-                      child: ElevatedButton.icon(
-                        onPressed: authProvider.isGoogleLoading
-                            ? null
-                            : () => authProvider.signInWithGoogle(),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: ColorConstant.primary,
-                          foregroundColor: ColorConstant.secondary,
-                          elevation: DoubleConstant.four,
-                          padding: context.padding.normal,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: context.border.highBorderRadius,
-                          ),
-                        ),
-                        icon: authProvider.isGoogleLoading
-                            ? const SizedBox(
-                                width: DoubleConstant.twentyFour,
-                                height: DoubleConstant.twentyFour,
-                                child: CircularProgressIndicator(
-                                  color: ColorConstant.secondary,
-                                  strokeWidth: 2,
-                                ),
-                              )
-                            : const Icon(
-                                Icons.g_mobiledata,
-                                size: DoubleConstant.twentyFour,
-                                color: ColorConstant.secondary,
-                              ),
-                        label: Text(
-                          authProvider.isGoogleLoading
-                              ? 'Giriş yapılıyor...'
-                              : StringConstant.signInGoogle,
-                          style: context.general.textTheme.titleMedium,
-                        ),
-                      ),
-                    ),
-
+                    _GoogleLoginButton(authProvider: authProvider),
                     context.sized.emptySizedHeightBoxLow3x,
-
-                    // Facebook signIn button
-                    SizedBox(
-                      width: context.sized.dynamicWidth(.85),
-                      child: ElevatedButton.icon(
-                        onPressed: authProvider.isFacebookLoading
-                            ? null
-                            : () => authProvider.signInWithFacebook(),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor:
-                              ColorConstant.facebookLoginBackground,
-                          foregroundColor: ColorConstant.primary,
-                          elevation: DoubleConstant.four,
-                          padding: context.padding.normal,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: context.border.highBorderRadius,
-                          ),
-                        ),
-                        icon: authProvider.isFacebookLoading
-                            ? const SizedBox(
-                                width: DoubleConstant.twentyFour,
-                                height: DoubleConstant.twentyFour,
-                                child: CircularProgressIndicator(
-                                  color: ColorConstant.primary,
-                                  strokeWidth: 2,
-                                ),
-                              )
-                            : const Icon(
-                                Icons.facebook,
-                                size: DoubleConstant.twentyFour,
-                              ),
-                        label: Text(
-                          authProvider.isFacebookLoading
-                              ? 'Giriş yapılıyor...'
-                              : StringConstant.signInFacebook,
-                          style: context.general.textTheme.titleMedium
-                              ?.copyWith(
-                                color: ColorConstant.primary,
-                              ),
-                        ),
-                      ),
-                    ),
-
-                    // "or" text
-                    Padding(
-                      padding: context.padding.verticalMedium,
-                      child: Text(
-                        StringConstant.seperateText,
-                        style: context.general.textTheme.bodyLarge?.copyWith(
-                          color: ColorConstant.primaryLight,
-                        ),
-                      ),
-                    ),
-
-                    // Email signUp button
-                    SizedBox(
-                      width: context.sized.dynamicWidth(.85),
-                      child: ElevatedButton(
-                        onPressed: () {
-                          context.route.navigation.pushReplacementNamed(
-                            AppRouter.signUp,
-                          );
-                        },
-                        style: ElevatedButton.styleFrom(
-                          side: const BorderSide(
-                            color: ColorConstant.transparent,
-                          ),
-                          backgroundColor: ColorConstant.emailBackground,
-                          elevation: DoubleConstant.four,
-                          padding: context.padding.normal,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: context.border.highBorderRadius,
-                          ),
-                        ),
-                        child: Text(
-                          StringConstant.emailSignup,
-                          style: context.general.textTheme.titleMedium
-                              ?.copyWith(
-                                color: ColorConstant.primary,
-                                fontWeight: FontWeight.w700,
-                              ),
-                        ),
-                      ),
-                    ),
-
+                    _FacebookLoginButton(authProvider: authProvider),
+                    const _SeperateText(),
+                    const _EmailButton(),
                     context.sized.emptySizedHeightBoxHigh,
-
-                    // Terms of Service
-                    Padding(
-                      padding:
-                          context.padding.onlyTopNormal +
-                          context.padding.onlyTopHigh,
-                      child: RichText(
-                        textAlign: TextAlign.center,
-                        text: TextSpan(
-                          style: context.general.textTheme.labelSmall?.copyWith(
-                            color: ColorConstant.primaryLight,
-                            letterSpacing: DoubleConstant.termsLetterSpacing,
-                          ),
-                          children: [
-                            const TextSpan(text: StringConstant.firstTermsText),
-                            TextSpan(
-                              text: StringConstant.secondTermsText,
-                              style: context.general.textTheme.labelSmall
-                                  ?.copyWith(
-                                    color: ColorConstant.primaryLight,
-                                    decoration: TextDecoration.underline,
-                                    decorationColor: ColorConstant.primary,
-                                    letterSpacing:
-                                        DoubleConstant.termsLetterSpacing,
-                                  ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+                    const _TermsText(),
                   ],
                 ),
               ),
             ],
           );
         },
-      ),
-    );
-  }
-}
-
-final class _SplashEmojiWidget extends StatelessWidget {
-  const _SplashEmojiWidget({
-    required this.topValue,
-    required this.bottomValue,
-    required this.leftValue,
-    required this.rightValue,
-    required this.emoji,
-    required this.containerSize,
-    required this.emojiSize,
-  });
-
-  final double? topValue;
-  final double? bottomValue;
-  final double? leftValue;
-  final double? rightValue;
-  final String emoji;
-  final double containerSize;
-  final double emojiSize;
-
-  @override
-  Widget build(BuildContext context) {
-    return Positioned(
-      top: topValue,
-      bottom: bottomValue,
-      right: rightValue,
-      left: leftValue,
-      child: Container(
-        width: containerSize,
-        height: containerSize,
-        decoration: const BoxDecoration(
-          color: ColorConstant.emojiColor,
-          shape: BoxShape.circle,
-        ),
-        child: Center(
-          child: Text(
-            emoji,
-            style: TextStyle(fontSize: emojiSize),
-          ),
-        ),
       ),
     );
   }
