@@ -26,6 +26,8 @@ class SplashView extends StatefulWidget {
 class _SplashViewState extends State<SplashView> with SplashMixin {
   @override
   Widget build(BuildContext context) {
+    final isSmallScreen = context.sized.height < 700;
+
     return Scaffold(
       body: Consumer<AuthProvider>(
         builder: (context, authProvider, child) {
@@ -57,8 +59,12 @@ class _SplashViewState extends State<SplashView> with SplashMixin {
 
               // Tired Emoji
               _SplashEmojiWidget(
-                topValue: context.sized.dynamicHeight(.325),
-                rightValue: context.sized.dynamicHeight(.05),
+                topValue: isSmallScreen
+                    ? context.sized.dynamicHeight(.37)
+                    : context.sized.dynamicHeight(.325),
+                rightValue: isSmallScreen
+                    ? context.sized.dynamicHeight(.075)
+                    : context.sized.dynamicHeight(.05),
                 leftValue: null,
                 bottomValue: null,
                 emoji: '😌',
@@ -68,8 +74,12 @@ class _SplashViewState extends State<SplashView> with SplashMixin {
 
               // Surprised Emoji
               _SplashEmojiWidget(
-                bottomValue: context.sized.dynamicHeight(.19),
-                leftValue: context.sized.dynamicHeight(.04),
+                bottomValue: isSmallScreen
+                    ? context.sized.dynamicHeight(.1)
+                    : context.sized.dynamicHeight(.19),
+                leftValue: isSmallScreen
+                    ? context.sized.dynamicHeight(.065)
+                    : context.sized.dynamicHeight(.04),
                 rightValue: null,
                 topValue: null,
                 emoji: '🤩',
@@ -101,7 +111,7 @@ class _SplashViewState extends State<SplashView> with SplashMixin {
                     _FacebookLoginButton(authProvider: authProvider),
                     const _SeperateText(),
                     const _EmailButton(),
-                    context.sized.emptySizedHeightBoxHigh,
+                    const Spacer(),
                     const _TermsText(),
                   ],
                 ),

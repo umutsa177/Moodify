@@ -6,7 +6,7 @@ final class _TermsText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: context.padding.onlyTopNormal + context.padding.onlyTopHigh,
+      padding: context.padding.onlyBottomLow,
       child: RichText(
         textAlign: TextAlign.center,
         text: TextSpan(
