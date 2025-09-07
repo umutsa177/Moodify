@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Moodify</string>
+    <string name="facebook_app_id">1338189161267032</string>
+    <string name="fb_login_protocol_scheme">fb1338189161267032</string>
+    <string name="facebook_client_token">5d7a07b9928db76583f9e84af4ba40af</string>
+</resources>
