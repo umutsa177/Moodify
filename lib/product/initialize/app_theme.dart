@@ -88,6 +88,7 @@ final class AppTheme {
             fontWeight: FontWeight.normal,
           ),
         ),
+
         // outlinedButtonTheme: OutlinedButtonThemeData(
         //   style: OutlinedButton.styleFrom(
         //     backgroundColor: ColorConstant.primary,
@@ -115,17 +116,18 @@ final class AppTheme {
         //     ),
         //   ),
         // ),
-        // elevatedButtonTheme: ElevatedButtonThemeData(
-        //   style: ElevatedButton.styleFrom(
-        //     backgroundColor: ColorConstant.blue,
-        //     minimumSize: Size(
-        //       double.infinity,
-        //       context.sized.dynamicHeight(.05),
-        //     ),
-        //     shape: RoundedRectangleBorder(
-        //       borderRadius: context.border.lowBorderRadius,
-        //     ),
-        //   ),
-        // ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            fixedSize: Size.fromWidth(context.sized.width),
+            elevation: DoubleConstant.four,
+            padding: context.padding.normal,
+            shape: RoundedRectangleBorder(
+              borderRadius: context.border.highBorderRadius,
+              side: const BorderSide(
+                color: ColorConstant.transparent,
+              ),
+            ),
+          ),
+        ),
       );
 }

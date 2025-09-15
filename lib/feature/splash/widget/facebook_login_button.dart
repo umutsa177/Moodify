@@ -18,11 +18,6 @@ final class _FacebookLoginButton extends StatelessWidget {
         style: ElevatedButton.styleFrom(
           backgroundColor: ColorConstant.facebookLoginBackground,
           foregroundColor: ColorConstant.primary,
-          elevation: DoubleConstant.four,
-          padding: context.padding.normal,
-          shape: RoundedRectangleBorder(
-            borderRadius: context.border.highBorderRadius,
-          ),
         ),
         icon: authProvider.isFacebookLoading
             ? const SizedBox(

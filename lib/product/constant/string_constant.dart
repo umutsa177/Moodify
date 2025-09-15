@@ -21,8 +21,22 @@ final class StringConstant {
   static const String firstTermsText = 'By continuing, you agree to our ';
   static const String secondTermsText = 'Terms of Service';
   static const String seperateText = 'or';
+
+  // Register Screen
+  static const String registerTitle = 'Create your account';
+
+  static const String email = 'Email';
+  static const String password = 'Password';
+  static const String confirmPassword = 'Confirm Password';
+  static const String alreadyHaveAccount = 'Already have an account?';
+  static const String signUp = 'Sign Up';
+
+  // Login
+  static const String login = 'Login';
+
+  // supabase
   static const String supabaseRedirectUri =
       'com.umutsayar.moodify://oauth2redirect';
 
-  static String loading = 'Loading...';
+  static const String loading = 'Loading...';
 }

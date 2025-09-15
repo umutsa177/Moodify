@@ -18,11 +18,6 @@ final class _GoogleLoginButton extends StatelessWidget {
         style: ElevatedButton.styleFrom(
           backgroundColor: ColorConstant.primary,
           foregroundColor: ColorConstant.secondary,
-          elevation: DoubleConstant.four,
-          padding: context.padding.normal,
-          shape: RoundedRectangleBorder(
-            borderRadius: context.border.highBorderRadius,
-          ),
         ),
         icon: authProvider.isGoogleLoading
             ? const SizedBox(

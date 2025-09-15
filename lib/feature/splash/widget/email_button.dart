@@ -14,15 +14,7 @@ final class _EmailButton extends StatelessWidget {
           );
         },
         style: ElevatedButton.styleFrom(
-          side: const BorderSide(
-            color: ColorConstant.transparent,
-          ),
           backgroundColor: ColorConstant.emailBackground,
-          elevation: DoubleConstant.four,
-          padding: context.padding.normal,
-          shape: RoundedRectangleBorder(
-            borderRadius: context.border.highBorderRadius,
-          ),
         ),
         child: Text(
           StringConstant.emailSignup,

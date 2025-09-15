@@ -40,7 +40,7 @@ class _SplashViewState extends State<SplashView> with SplashMixin {
                     gradient: LinearGradient(
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
-                      colors: ColorConstant.backgroundColors,
+                      colors: ColorConstant.splashBackgroundColors,
                     ),
                   ),
                 ),

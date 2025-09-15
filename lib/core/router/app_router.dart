@@ -5,6 +5,8 @@ import 'package:moodify/feature/navBar/view/nav_bar.dart';
 import 'package:moodify/feature/splash/view/splash_view.dart';
 
 class AppRouter {
+  const AppRouter._();
+
   static const String splash = '/';
   static const String moodSelection = '/mood-selection';
   static const String signUp = '/sign-up';
