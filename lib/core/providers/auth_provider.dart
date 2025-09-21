@@ -104,7 +104,7 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
-  // Email login
+  // Email Sign Up
   Future<void> signUpWithEmail(String email, String password) async {
     try {
       _status = AuthStatus.isEmailLoading;
@@ -115,6 +115,29 @@ class AuthProvider extends ChangeNotifier {
         email: email,
         password: password,
         emailRedirectTo: StringConstant.supabaseRedirectUri,
+      );
+    } on AuthException catch (error) {
+      _status = AuthStatus.error;
+      log(error.message);
+      _errorMessage = _getLocalizedErrorMessage(error.message);
+      notifyListeners();
+    } on Exception catch (_) {
+      _status = AuthStatus.error;
+      _errorMessage = 'Beklenmeyen bir hata oluştu. Lütfen tekrar deneyin.';
+      notifyListeners();
+    }
+  }
+
+  // Email Sign In
+  Future<void> signInWithEmail(String email, String password) async {
+    try {
+      _status = AuthStatus.isEmailLoading;
+      _errorMessage = null;
+      notifyListeners();
+
+      await _supabase.auth.signInWithPassword(
+        email: email,
+        password: password,
       );
     } on AuthException catch (error) {
       _status = AuthStatus.error;

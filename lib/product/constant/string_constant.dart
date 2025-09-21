@@ -33,6 +33,9 @@ final class StringConstant {
 
   // Login
   static const String login = 'Login';
+  static const String loginTitle = 'Log in to your account';
+  static const String forgotPassword = 'Forgot Password?';
+  static const String dontHaveAccount = "Don't have an account?";
 
   // Verification
   static const String backToSignUp = 'Back to Sign Up';
