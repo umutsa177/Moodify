@@ -34,6 +34,15 @@ final class StringConstant {
   // Login
   static const String login = 'Login';
 
+  // Verification
+  static const String backToSignUp = 'Back to Sign Up';
+  static const String resendEmailFirstText = "Didn't receive the email?";
+  static const String resendEmailSecondText = 'Resend';
+  static const String checkMail = 'Check your email';
+  static const String sendLink = "We've sent a verification link to:";
+  static const String checkInboxAndContinue =
+      'Please check your inbox and click the link to continue';
+
   // supabase
   static const String supabaseRedirectUri =
       'com.umutsayar.moodify://oauth2redirect';

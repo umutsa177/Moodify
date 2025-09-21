@@ -64,6 +64,15 @@ mixin SplashMixin<T extends StatefulWidget> on State<T> {
           await context.route.navigation.pushReplacementNamed(
             AppRouter.moodSelection,
           );
+        } else {
+          // there is a session but email unapproved
+          // go to email verification page
+          if (session != null && mounted) {
+            await context.route.navigation.pushReplacementNamed(
+              AppRouter.emailVerification,
+              arguments: session.user.email,
+            );
+          }
         }
       }
     });

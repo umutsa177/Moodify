@@ -65,8 +65,6 @@ class AuthProvider extends ChangeNotifier {
         redirectTo: StringConstant.supabaseRedirectUri,
         scopes: 'email profile',
       );
-
-      // Auth state change listener otomatik olarak durumu güncelleyecek
     } on AuthException catch (error) {
       _status = AuthStatus.error;
       log(error.message);
@@ -116,6 +114,7 @@ class AuthProvider extends ChangeNotifier {
       await _supabase.auth.signUp(
         email: email,
         password: password,
+        emailRedirectTo: StringConstant.supabaseRedirectUri,
       );
     } on AuthException catch (error) {
       _status = AuthStatus.error;

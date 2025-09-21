@@ -59,6 +59,57 @@ final class AppTheme {
             fontFamily: 'Epilogue',
           ),
         ),
+        primaryTextTheme: context.general.primaryTextTheme.copyWith(
+          titleLarge: context.general.primaryTextTheme.titleLarge?.copyWith(
+            fontFamily: 'Epilogue',
+          ),
+          titleMedium: context.general.primaryTextTheme.titleMedium?.copyWith(
+            fontFamily: 'Epilogue',
+          ),
+          titleSmall: context.general.primaryTextTheme.titleSmall?.copyWith(
+            fontFamily: 'Epilogue',
+          ),
+          bodyLarge: context.general.primaryTextTheme.bodyLarge?.copyWith(
+            fontFamily: 'Epilogue',
+          ),
+          bodyMedium: context.general.primaryTextTheme.bodyMedium?.copyWith(
+            fontFamily: 'Epilogue',
+          ),
+          bodySmall: context.general.primaryTextTheme.bodySmall?.copyWith(
+            fontFamily: 'Epilogue',
+          ),
+          labelLarge: context.general.primaryTextTheme.labelLarge?.copyWith(
+            fontFamily: 'Epilogue',
+          ),
+          labelMedium: context.general.primaryTextTheme.labelMedium?.copyWith(
+            fontFamily: 'Epilogue',
+          ),
+          labelSmall: context.general.primaryTextTheme.labelSmall?.copyWith(
+            fontFamily: 'Epilogue',
+          ),
+          displaySmall: context.general.primaryTextTheme.displaySmall?.copyWith(
+            fontFamily: 'Epilogue',
+          ),
+          displayMedium: context.general.primaryTextTheme.displayMedium
+              ?.copyWith(
+                fontFamily: 'Epilogue',
+              ),
+          displayLarge: context.general.primaryTextTheme.displayLarge?.copyWith(
+            fontFamily: 'Epilogue',
+          ),
+          headlineSmall: context.general.primaryTextTheme.headlineSmall
+              ?.copyWith(
+                fontFamily: 'Epilogue',
+              ),
+          headlineMedium: context.general.primaryTextTheme.headlineMedium
+              ?.copyWith(
+                fontFamily: 'Epilogue',
+              ),
+          headlineLarge: context.general.primaryTextTheme.headlineLarge
+              ?.copyWith(
+                fontFamily: 'Epilogue',
+              ),
+        ),
 
         // cardTheme: const CardThemeData(
         //   margin: EdgeInsets.zero,

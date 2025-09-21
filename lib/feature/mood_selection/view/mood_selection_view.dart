@@ -5,9 +5,9 @@ class MoodSelectionView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Mood Selection'),
+    return const Scaffold(
+      body: Center(
+        child: Text('Mood Selection'),
       ),
     );
   }

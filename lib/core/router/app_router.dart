@@ -10,11 +10,11 @@ class AppRouter {
   const AppRouter._();
 
   static const String splash = '/';
-  static const String moodSelection = '/mood-selection';
-  static const String signUp = '/sign-up';
-  static const String signIn = '/sign-in';
-  static const String emailVerification = '/email-verification';
-  static const String navbar = '/navbar';
+  static const String moodSelection = 'mood-selection';
+  static const String signUp = 'sign-up';
+  static const String signIn = 'sign-in';
+  static const String emailVerification = 'email-verification';
+  static const String navbar = 'navbar';
 
   static Map<String, WidgetBuilder> get routes => {
     splash: (context) => const SplashView(),

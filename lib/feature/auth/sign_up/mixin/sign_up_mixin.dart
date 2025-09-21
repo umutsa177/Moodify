@@ -2,11 +2,12 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:kartal/kartal.dart';
+import 'package:moodify/core/providers/auth_provider.dart';
 import 'package:moodify/core/router/app_router.dart';
 import 'package:moodify/feature/auth/sign_up/view/sign_up_view.dart';
 import 'package:moodify/product/constant/color_constant.dart';
 import 'package:moodify/product/extension/toast_extension.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:provider/provider.dart';
 
 mixin SignUpMixin on State<SignUpView> {
   // Controllers
@@ -45,36 +46,26 @@ mixin SignUpMixin on State<SignUpView> {
     });
 
     try {
-      final supabase = Supabase.instance.client;
+      final authProvider = Provider.of<AuthProvider>(context, listen: false);
 
-      // Create user with email redirect
-      final response = await supabase.auth.signUp(
-        email: emailController.text.trim(),
-        password: passwordController.text,
-        emailRedirectTo: 'com.umutsayar.moodify://oauth2redirect',
+      await authProvider.signUpWithEmail(
+        emailController.text.trim(),
+        passwordController.text,
       );
 
-      if (response.user != null && mounted) {
-        // Redirection
+      // Redirect to email verification page
+      if (mounted) {
         unawaited(
-          context.route.navigation.pushReplacementNamed(
+          context.route.navigation.pushNamed(
             AppRouter.emailVerification,
             arguments: emailController.text.trim(),
           ),
         );
       }
-    } on AuthException catch (error) {
+    } on Exception catch (e) {
       if (mounted) {
         ToastExtension.showToast(
-          message: error.message,
-          backgroundColor: ColorConstant.error,
-          context: context,
-        );
-      }
-    } on Exception catch (_) {
-      if (mounted) {
-        ToastExtension.showToast(
-          message: 'There was an unexpected error. Please try again.',
+          message: e.toString(),
           backgroundColor: ColorConstant.error,
           context: context,
         );
