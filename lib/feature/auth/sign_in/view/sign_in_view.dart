@@ -68,7 +68,6 @@ class _SignInViewState extends State<SignInView> with SignInMixin {
                         ],
                       ),
                     ),
-                    _forgotPasswordButton(context),
                     _SignInButton(
                       isLoading: isLoading,
                       onPressed: emailSignIn,
@@ -81,27 +80,6 @@ class _SignInViewState extends State<SignInView> with SignInMixin {
           ),
         ),
       ),
-    );
-  }
-
-  Row _forgotPasswordButton(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        TextButton(
-          onPressed: () => context.route.navigation.pushNamed(
-            AppRouter.resetPaswword,
-          ),
-          style: TextButton.styleFrom(
-            padding: context.padding.horizontalLow,
-            foregroundColor: ColorConstant.onPrimary,
-          ),
-          child: Text(
-            StringConstant.forgotPassword,
-            style: context.general.primaryTextTheme.labelSmall,
-          ),
-        ),
-      ],
     );
   }
 }

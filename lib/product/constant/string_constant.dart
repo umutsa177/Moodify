@@ -25,11 +25,13 @@ final class StringConstant {
   // Register Screen
   static const String registerTitle = 'Create your account';
 
+  // Sign Up
   static const String email = 'Email';
   static const String password = 'Password';
   static const String confirmPassword = 'Confirm Password';
   static const String alreadyHaveAccount = 'Already have an account?';
   static const String signUp = 'Sign Up';
+  static const String signUpSuccess = 'Account created successfully';
 
   // Login
   static const String login = 'Login';

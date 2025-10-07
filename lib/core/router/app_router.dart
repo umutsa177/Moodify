@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:moodify/feature/auth/resetPassword/view/reset_password_view.dart';
 import 'package:moodify/feature/auth/sign_in/view/sign_in_view.dart';
 import 'package:moodify/feature/auth/sign_up/view/sign_up_view.dart';
 import 'package:moodify/feature/auth/verification/view/email_verification_view.dart';
@@ -15,7 +14,6 @@ class AppRouter {
   static const String signUp = 'sign-up';
   static const String signIn = 'sign-in';
   static const String emailVerification = 'email-verification';
-  static const String resetPaswword = 'reset-password';
   static const String navbar = 'navbar';
 
   static Map<String, WidgetBuilder> get routes => {
@@ -24,7 +22,6 @@ class AppRouter {
     signUp: (context) => const SignUpView(),
     signIn: (context) => const SignInView(),
     emailVerification: (context) => const EmailVerificationView(),
-    resetPaswword: (context) => const ResetPasswordView(),
     navbar: (context) => const NavBar(),
   };
 }
