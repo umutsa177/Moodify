@@ -23,7 +23,7 @@ final class _SignInButton extends StatelessWidget {
                 height: context.sized.normalValue,
                 width: context.sized.normalValue,
                 child: const CircularProgressIndicator(
-                  strokeWidth: DoubleConstant.strokeWidth,
+                  strokeWidth: DoubleConstant.two,
                   valueColor: AlwaysStoppedAnimation<Color>(
                     ColorConstant.secondary,
                   ),

@@ -3,13 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:kartal/kartal.dart';
 import 'package:moodify/core/providers/auth_provider.dart';
 import 'package:moodify/core/router/app_router.dart';
+import 'package:moodify/feature/splash/view/splash_view.dart';
 import 'package:moodify/product/constant/color_constant.dart';
 import 'package:moodify/product/constant/string_constant.dart';
 import 'package:moodify/product/enum/auth_status.dart';
 import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-mixin SplashMixin<T extends StatefulWidget> on State<T> {
+mixin SplashMixin on State<SplashView> {
   final _appLinks = AppLinks();
 
   @override

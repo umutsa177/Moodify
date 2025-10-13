@@ -48,6 +48,13 @@ final class StringConstant {
   static const String checkInboxAndContinue =
       'Please check your inbox and click the link to continue';
 
+  // Mood Selection
+  static const String moodSelectionTitle = 'How are you feeling today?';
+  static const String moodSelectionFirstDescriptionText =
+      'Select a mood to get video';
+  static const String moodSelectionSecondDescriptionText =
+      'recommendations tailored just for you';
+
   // supabase
   static const String supabaseRedirectUri =
       'com.umutsayar.moodify://oauth2redirect';

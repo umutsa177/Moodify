@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
       title: StringConstant.appName,
       theme: AppTheme(context).theme,
       routes: AppRouter.routes,
-      initialRoute: AppRouter.splash,
+      initialRoute: AppRouter.moodSelection,
     );
   }
 }

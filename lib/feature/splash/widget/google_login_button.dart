@@ -25,7 +25,7 @@ final class _GoogleLoginButton extends StatelessWidget {
                 height: DoubleConstant.twentyFour,
                 child: CircularProgressIndicator(
                   color: ColorConstant.secondary,
-                  strokeWidth: DoubleConstant.strokeWidth,
+                  strokeWidth: DoubleConstant.two,
                 ),
               )
             : const Icon(

@@ -25,7 +25,7 @@ final class _FacebookLoginButton extends StatelessWidget {
                 height: DoubleConstant.twentyFour,
                 child: CircularProgressIndicator(
                   color: ColorConstant.primary,
-                  strokeWidth: DoubleConstant.strokeWidth,
+                  strokeWidth: DoubleConstant.two,
                 ),
               )
             : const Icon(

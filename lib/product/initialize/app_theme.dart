@@ -111,12 +111,15 @@ final class AppTheme {
               ),
         ),
 
-        // cardTheme: const CardThemeData(
-        //   margin: EdgeInsets.zero,
-        //   color: ColorConstant.primary,
-        //   elevation: 2,
-        //   shape: CircleBorder(),
-        // ),
+        cardTheme: CardThemeData(
+          margin: context.padding.low,
+          color: ColorConstant.emojiColor,
+          elevation: DoubleConstant.four,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(context.sized.lowValue),
+            side: const BorderSide(color: ColorConstant.transparent),
+          ),
+        ),
         scaffoldBackgroundColor: ColorConstant.primary,
         // appBarTheme: const AppBarTheme(
         //   backgroundColor: ColorConstant.transparent,
@@ -139,34 +142,6 @@ final class AppTheme {
             fontWeight: FontWeight.normal,
           ),
         ),
-
-        // outlinedButtonTheme: OutlinedButtonThemeData(
-        //   style: OutlinedButton.styleFrom(
-        //     backgroundColor: ColorConstant.primary,
-        //     iconColor: ColorConstant.primary,
-        //     shape: RoundedRectangleBorder(
-        //       borderRadius: context.border.highBorderRadius,
-        //       side: BorderSide(color: ColorConstant.blue.withValues(alpha: .3)),
-        //     ),
-        //   ),
-        // ),
-        // filledButtonTheme: FilledButtonThemeData(
-        //   style: FilledButton.styleFrom(
-        //     backgroundColor: ColorConstant.blue,
-        //     shape: RoundedRectangleBorder(
-        //       borderRadius: context.border.highBorderRadius,
-        //     ),
-        //   ),
-        // ),
-        // bottomSheetTheme: BottomSheetThemeData(
-        //   backgroundColor: ColorConstant.primary,
-        //   shape: RoundedRectangleBorder(
-        //     borderRadius: BorderRadius.only(
-        //       topRight: context.border.normalBorderRadius.topRight,
-        //       topLeft: context.border.normalBorderRadius.topLeft,
-        //     ),
-        //   ),
-        // ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
             fixedSize: Size.fromWidth(context.sized.width),
