@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:moodify/core/providers/auth_provider.dart';
+import 'package:moodify/core/providers/auth/auth_provider.dart';
 import 'package:moodify/core/router/app_router.dart';
 import 'package:moodify/product/constant/string_constant.dart';
 import 'package:moodify/product/initialize/app_start.dart';
@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: StringConstant.appName,
       theme: AppTheme(context).theme,
-      routes: AppRouter.routes,
+      onGenerateRoute: AppRouter.routes,
       initialRoute: AppRouter.moodSelection,
     );
   }

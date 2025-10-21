@@ -9,8 +9,8 @@ final class _MoodCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        context.route.navigation.pushNamed(
+      onTap: () async {
+        await context.route.navigation.pushNamed(
           AppRouter.navbar,
           arguments: moods,
         );

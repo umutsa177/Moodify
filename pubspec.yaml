@@ -14,17 +14,24 @@ dependencies:
   dio: ^5.9.0
 
   # Cache
-  hive_ce: ^2.11.3
+  hive_ce: ^2.15.0
+  cached_network_image: ^3.4.1
+
+  # Loading
+  shimmer: ^3.0.0
 
   # Core
   equatable: ^2.0.7
   kartal: ^4.2.0
 
   # Icon
-  flutter_svg: ^2.2.0
+  flutter_svg: ^2.2.1
 
   # Toast
   fluttertoast: ^8.2.12
+
+  # Json Serialization
+  json_annotation: ^4.9.0
 
   # State Management
   provider: ^6.1.5+1
@@ -33,7 +40,7 @@ dependencies:
   app_links: ^6.4.1
 
   # Supabase
-  supabase_flutter: ^2.10.0
+  supabase_flutter: ^2.10.3
 
   cupertino_icons: ^1.0.8
 
@@ -41,7 +48,12 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  very_good_analysis: ^9.0.0
+  # Code Generator
+  build_runner: ^2.9.0
+  json_serializable: ^6.11.1
+
+  # Linter
+  very_good_analysis: ^10.0.0
 
 flutter:
   uses-material-design: true

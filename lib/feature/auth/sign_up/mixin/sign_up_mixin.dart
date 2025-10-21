@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:kartal/kartal.dart';
-import 'package:moodify/core/providers/auth_provider.dart';
+import 'package:moodify/core/providers/auth/auth_provider.dart';
 import 'package:moodify/core/router/app_router.dart';
 import 'package:moodify/feature/auth/sign_up/view/sign_up_view.dart';
 import 'package:moodify/product/constant/color_constant.dart';
@@ -64,7 +64,7 @@ mixin SignUpMixin on State<SignUpView> {
       }
     } on Exception catch (e) {
       if (mounted) {
-        ToastExtension.showToast(
+        await ToastExtension.showToast(
           message: e.toString(),
           backgroundColor: ColorConstant.error,
           context: context,

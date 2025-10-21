@@ -8,8 +8,8 @@ final class _EmailButton extends StatelessWidget {
     return SizedBox(
       width: context.sized.dynamicWidth(.85),
       child: ElevatedButton(
-        onPressed: () {
-          context.route.navigation.pushNamed(
+        onPressed: () async {
+          await context.route.navigation.pushNamed(
             AppRouter.signUp,
           );
         },

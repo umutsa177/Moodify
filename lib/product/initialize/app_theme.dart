@@ -120,15 +120,12 @@ final class AppTheme {
             side: const BorderSide(color: ColorConstant.transparent),
           ),
         ),
-        scaffoldBackgroundColor: ColorConstant.primary,
-        // appBarTheme: const AppBarTheme(
-        //   backgroundColor: ColorConstant.transparent,
-        //   surfaceTintColor: ColorConstant.primary,
-        //   elevation: DoubleConstant.zero,
-        //   actionsIconTheme: IconThemeData(
-        //     color: ColorConstant.grey,
-        //   ),
-        // ),
+        appBarTheme: const AppBarTheme(
+          backgroundColor: ColorConstant.transparent,
+          centerTitle: true,
+          elevation: DoubleConstant.zero,
+          surfaceTintColor: Colors.transparent,
+        ),
         bottomNavigationBarTheme: BottomNavigationBarThemeData(
           backgroundColor: ColorConstant.navBarBackground,
           elevation: DoubleConstant.zero,

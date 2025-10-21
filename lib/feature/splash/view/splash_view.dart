@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kartal/kartal.dart';
-import 'package:moodify/core/providers/auth_provider.dart';
+import 'package:moodify/core/providers/auth/auth_provider.dart';
 import 'package:moodify/core/router/app_router.dart';
 import 'package:moodify/feature/splash/mixin/splash_mixin.dart';
 import 'package:moodify/product/constant/color_constant.dart';

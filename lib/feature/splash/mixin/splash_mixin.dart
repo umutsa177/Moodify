@@ -1,7 +1,7 @@
 import 'package:app_links/app_links.dart';
 import 'package:flutter/material.dart';
 import 'package:kartal/kartal.dart';
-import 'package:moodify/core/providers/auth_provider.dart';
+import 'package:moodify/core/providers/auth/auth_provider.dart';
 import 'package:moodify/core/router/app_router.dart';
 import 'package:moodify/feature/splash/view/splash_view.dart';
 import 'package:moodify/product/constant/color_constant.dart';
@@ -14,23 +14,26 @@ mixin SplashMixin on State<SplashView> {
   final _appLinks = AppLinks();
 
   @override
-  void initState() {
+  Future<void> initState() async {
     super.initState();
-    initDeepLinks();
-    checkAuth(context);
+    await initDeepLinks();
+    if (mounted) checkAuth(context);
   }
 
   // Authentication check
   void checkAuth(BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
       final authProvider = Provider.of<AuthProvider>(context, listen: false);
       if (authProvider.isAuthenticated) {
-        context.route.navigation.pushReplacementNamed(AppRouter.moodSelection);
+        await context.route.navigation.pushReplacementNamed(
+          AppRouter.moodSelection,
+        );
       }
 
       // Hata mesajını göster
       if (authProvider.status == AuthStatus.error &&
-          authProvider.errorMessage != null) {
+          authProvider.errorMessage != null &&
+          context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(authProvider.errorMessage!),

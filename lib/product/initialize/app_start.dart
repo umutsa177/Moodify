@@ -16,6 +16,8 @@ final class AppStart {
 
   static String supabaseUrl = '';
   static String supabaseAnonKey = '';
+  static String vimeoBaseUrl = '';
+  static String vimeoAccessToken = '';
 
   static Future<void> init() async {
     const endpoint =
@@ -33,10 +35,14 @@ final class AppStart {
 
       supabaseUrl = (data['SUPABASE_URL'] ?? '').toString();
       supabaseAnonKey = (data['SUPABASE_ANON_KEY'] ?? '').toString();
+      vimeoBaseUrl = (data['VIMEO_BASE_URL'] ?? '').toString();
+      vimeoAccessToken = (data['VIMEO_ACCESS_TOKEN'] ?? '').toString();
     } on Exception catch (_) {
       // Hata durumunda boş string'lerle devam eder
       supabaseUrl = '';
       supabaseAnonKey = '';
+      vimeoBaseUrl = '';
+      vimeoAccessToken = '';
     }
 
     await Supabase.initialize(

@@ -28,7 +28,7 @@ mixin EmailVerificationMixin on State<EmailVerificationView> {
   Future<void> resendEmailVerification() async {
     if (userEmail == null || userEmail!.isEmpty) {
       if (mounted) {
-        ToastExtension.showToast(
+        await ToastExtension.showToast(
           message: 'Email address not found. Please go back and try again.',
           backgroundColor: ColorConstant.error,
           context: context,
@@ -52,7 +52,7 @@ mixin EmailVerificationMixin on State<EmailVerificationView> {
       );
 
       if (mounted) {
-        ToastExtension.showToast(
+        await ToastExtension.showToast(
           message: 'Verification email sent successfully!',
           backgroundColor: ColorConstant.success,
           context: context,
@@ -60,7 +60,7 @@ mixin EmailVerificationMixin on State<EmailVerificationView> {
       }
     } on AuthException catch (error) {
       if (mounted) {
-        ToastExtension.showToast(
+        await ToastExtension.showToast(
           message: error.message,
           backgroundColor: ColorConstant.error,
           context: context,
@@ -68,7 +68,7 @@ mixin EmailVerificationMixin on State<EmailVerificationView> {
       }
     } on Exception catch (_) {
       if (mounted) {
-        ToastExtension.showToast(
+        await ToastExtension.showToast(
           message: 'Failed to send verification email. Please try again.',
           backgroundColor: ColorConstant.error,
           context: context,

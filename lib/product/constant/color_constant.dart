@@ -35,4 +35,10 @@ final class ColorConstant {
     Color(0xFFE91E63), // Pink-Red
     Color(0xFF9C27B0), // Purple
   ];
+
+  static const List<Color> feedBackgroundColors = [
+    Color(0xFF833ab4),
+    Color(0xFFfd1d1d),
+    Color(0xFFfcb045),
+  ];
 }
