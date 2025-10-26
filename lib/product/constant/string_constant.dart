@@ -55,9 +55,15 @@ final class StringConstant {
   static const String moodSelectionSecondDescriptionText =
       'recommendations tailored just for you';
 
+  // Feed
+  static const String videosNotFound = 'No videos found or connection error';
+  static const String notPlayable = 'Video do not playable';
+  static const String notLoaded = 'Video failed to load';
+
   // supabase
   static const String supabaseRedirectUri =
       'com.umutsayar.moodify://oauth2redirect';
 
   static const String loading = 'Loading...';
+  static const String tryAgain = 'Try Again';
 }

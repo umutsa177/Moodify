@@ -9,14 +9,20 @@ final class ColorConstant {
   static const Color emailBackground = Colors.white54;
   static const Color emojiColor = Colors.white12;
   static final Color onPrimary = Colors.white.withValues(alpha: .8);
+  static const Color onTertiary = Colors.black54;
 
   static const Color secondary = Colors.black;
+  static const Color onSecondary = Colors.black87;
   static const Color turquoise = Color(0xFF4F8096);
   static final Color navBarBackground = Colors.grey.shade200;
   static const Color facebookLoginBackground = Color(0xFF1877F2);
   static const Color transparent = Colors.transparent;
   static const Color error = Colors.red;
   static const Color success = Colors.green;
+
+  // Shimmer Colors
+  static final Color softPurple = const Color(0xFFB388FF).withValues(alpha: .3);
+  static final Color softGold = const Color(0xFFFFD54F).withValues(alpha: .5);
 
   static const List<Color> splashBackgroundColors = [
     Color(0xFFE8B5FF), // Açık pembe-mor

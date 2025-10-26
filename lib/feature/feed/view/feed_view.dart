@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:ui';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -6,10 +7,17 @@ import 'package:kartal/kartal.dart';
 import 'package:moodify/core/providers/feed/feed_provider.dart';
 import 'package:moodify/product/constant/color_constant.dart';
 import 'package:moodify/product/constant/double_constant.dart';
+import 'package:moodify/product/constant/string_constant.dart';
 import 'package:moodify/product/enum/moods.dart';
 import 'package:moodify/product/extension/loading_extension.dart';
+import 'package:moodify/product/extension/toast_extension.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:webview_flutter/webview_flutter.dart';
+
+part '../widget/skeleton_loader.dart';
+part '../widget/feed_card.dart';
+part '../helper/video_player_dialog.dart';
 
 class FeedView extends StatelessWidget {
   const FeedView({required this.mood, super.key});
@@ -22,8 +30,8 @@ class FeedView extends StatelessWidget {
       child: Scaffold(
         extendBodyBehindAppBar: true,
         appBar: _appBar(context),
+        // Background
         body: Container(
-          // Background
           decoration: const BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topLeft,
@@ -50,7 +58,7 @@ class FeedView extends StatelessWidget {
   }
 }
 
-class _VideoList extends StatelessWidget {
+final class _VideoList extends StatelessWidget {
   const _VideoList();
 
   @override
@@ -60,9 +68,16 @@ class _VideoList extends StatelessWidget {
     final isLoading = provider.state.isLoading;
     final reachedEnd = provider.state.reachedEnd;
 
-    if (videos.isEmpty && isLoading) {
-      return const _SkeletonLoader();
+    if (!isLoading && videos.isEmpty) {
+      return Center(
+        child: Text(
+          StringConstant.videosNotFound,
+          style: context.general.primaryTextTheme.bodyLarge?.copyWith(),
+        ),
+      );
     }
+
+    if (videos.isEmpty && isLoading) return const _SkeletonLoader();
 
     return NotificationListener<ScrollNotification>(
       onNotification: (scroll) {
@@ -74,6 +89,7 @@ class _VideoList extends StatelessWidget {
         return false;
       },
       child: ListView.separated(
+        physics: const ClampingScrollPhysics(),
         padding: context.padding.normal + context.padding.onlyTopHigh,
         itemCount: videos.length + (reachedEnd ? 0 : 1),
         separatorBuilder: (_, _) => context.sized.emptySizedHeightBoxLow,
@@ -90,6 +106,18 @@ class _VideoList extends StatelessWidget {
             thumbnail: thumb ?? '',
             title: v.name,
             duration: '${v.duration} s',
+            videoUrl: v.playerEmbedUrl ?? '',
+            onTap: () async {
+              if (v.playerEmbedUrl != null && v.playerEmbedUrl!.isNotEmpty) {
+                await showVideoPlayer(context, v.playerEmbedUrl!, v.name);
+              } else {
+                await ToastExtension.showToast(
+                  message: StringConstant.notPlayable,
+                  backgroundColor: ColorConstant.error,
+                  context: context,
+                );
+              }
+            },
           );
         },
       ),
@@ -97,93 +125,30 @@ class _VideoList extends StatelessWidget {
   }
 }
 
-final class _FeedCard extends StatelessWidget {
-  const _FeedCard({
-    required this.thumbnail,
-    required this.title,
-    required this.duration,
-  });
-  final String thumbnail;
-  final String title;
-  final String duration;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: context.padding.horizontalLow + context.padding.onlyBottomLow,
-      height: context.sized.dynamicHeight(.25),
-      decoration: BoxDecoration(
-        borderRadius: context.border.highBorderRadius,
-        image: DecorationImage(
-          image: CachedNetworkImageProvider(thumbnail),
-          fit: BoxFit.cover,
+Future<void> showVideoPlayer(
+  BuildContext context,
+  String videoUrl,
+  String title,
+) async {
+  await showDialog<void>(
+    context: context,
+    barrierColor: ColorConstant.onTertiary,
+    builder: (context) => BackdropFilter(
+      filter: ImageFilter.blur(
+        sigmaX: DoubleConstant.eight,
+        sigmaY: DoubleConstant.eight,
+      ),
+      child: Dialog(
+        backgroundColor: ColorConstant.transparent,
+        insetPadding: EdgeInsets.symmetric(
+          horizontal: context.sized.dynamicWidth(.05),
+          vertical: context.sized.dynamicHeight(.1),
+        ),
+        child: VideoPlayerDialog(
+          videoUrl: videoUrl,
+          title: title,
         ),
       ),
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: context.border.highBorderRadius,
-          gradient: const LinearGradient(
-            begin: Alignment.bottomCenter,
-            end: Alignment.topCenter,
-            colors: [
-              Colors.black87,
-              Colors.transparent,
-            ],
-          ),
-        ),
-        padding: context.padding.normal,
-        alignment: Alignment.bottomLeft,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-              child: Text(
-                title,
-                maxLines: DoubleConstant.two.toInt(),
-                overflow: TextOverflow.ellipsis,
-                style: context.general.textTheme.titleMedium?.copyWith(
-                  color: ColorConstant.primary,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-            ),
-            Chip(
-              label: Text(duration),
-              backgroundColor: ColorConstant.onPrimary,
-              labelStyle: context.general.textTheme.bodySmall?.copyWith(
-                color: ColorConstant.secondary,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-final class _SkeletonLoader extends StatelessWidget {
-  const _SkeletonLoader();
-
-  @override
-  Widget build(BuildContext context) {
-    return Shimmer.fromColors(
-      baseColor: Colors.grey[300]!,
-      highlightColor: Colors.grey[100]!,
-      child: ListView.separated(
-        padding:
-            context.padding.normal +
-            EdgeInsets.only(top: context.sized.highValue),
-        itemCount: DoubleConstant.eight.toInt(),
-        separatorBuilder: (_, _) => context.sized.emptySizedHeightBoxLow,
-        itemBuilder: (_, _) => Container(
-          margin: context.padding.horizontalNormal,
-          height: context.sized.dynamicHeight(.25),
-          decoration: BoxDecoration(
-            color: ColorConstant.primary,
-            borderRadius: context.border.highBorderRadius,
-          ),
-        ),
-      ),
-    );
-  }
+    ),
+  );
 }

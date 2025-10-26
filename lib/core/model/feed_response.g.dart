@@ -19,12 +19,16 @@ Video _$VideoFromJson(Map<String, dynamic> json) => Video(
   name: json['name'] as String,
   duration: (json['duration'] as num).toInt(),
   pictures: Pictures.fromJson(json['pictures'] as Map<String, dynamic>),
+  link: json['link'] as String?,
+  playerEmbedUrl: json['player_embed_url'] as String?,
 );
 
 Map<String, dynamic> _$VideoToJson(Video instance) => <String, dynamic>{
   'name': instance.name,
   'duration': instance.duration,
   'pictures': instance.pictures,
+  'link': instance.link,
+  'player_embed_url': instance.playerEmbedUrl,
 };
 
 Pictures _$PicturesFromJson(Map<String, dynamic> json) => Pictures(

@@ -19,6 +19,7 @@ class Video {
     required this.duration,
     required this.pictures,
     this.link,
+    this.playerEmbedUrl, // EKLE
   });
 
   factory Video.fromJson(Map<String, dynamic> json) => _$VideoFromJson(json);
@@ -26,6 +27,8 @@ class Video {
   final int duration;
   final Pictures pictures;
   final String? link;
+  @JsonKey(name: 'player_embed_url')
+  final String? playerEmbedUrl;
   Map<String, dynamic> toJson() => _$VideoToJson(this);
 }
 
