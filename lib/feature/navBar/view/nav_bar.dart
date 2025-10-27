@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kartal/kartal.dart';
 import 'package:moodify/feature/navBar/mixin/nav_bar_mixin.dart';
 import 'package:moodify/product/constant/string_constant.dart';
 import 'package:moodify/product/enum/icon_constant.dart';
@@ -19,25 +20,29 @@ class _NavBarState extends State<NavBar> with NavBarMixin {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: pages[selectedIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: selectedIndex,
-        onTap: onItemTapped,
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: getNavBarIcon(
-              IconConstant.feed,
-              isSelected: selectedIndex == 0,
+      extendBody: true,
+      bottomNavigationBar: ClipRRect(
+        borderRadius: context.border.normalBorderRadius,
+        child: BottomNavigationBar(
+          currentIndex: selectedIndex,
+          onTap: onItemTapped,
+          items: <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: getNavBarIcon(
+                icon: IconConstant.feed,
+                isSelected: selectedIndex == 0,
+              ),
+              label: StringConstant.feed,
             ),
-            label: StringConstant.feed,
-          ),
-          BottomNavigationBarItem(
-            icon: getNavBarIcon(
-              IconConstant.profile,
-              isSelected: selectedIndex == 1,
+            BottomNavigationBarItem(
+              icon: getNavBarIcon(
+                icon: IconConstant.profile,
+                isSelected: selectedIndex == 1,
+              ),
+              label: StringConstant.profile,
             ),
-            label: StringConstant.profile,
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

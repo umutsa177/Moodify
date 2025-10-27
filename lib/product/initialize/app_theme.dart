@@ -129,14 +129,14 @@ final class AppTheme {
         bottomNavigationBarTheme: BottomNavigationBarThemeData(
           backgroundColor: ColorConstant.navBarBackground,
           elevation: DoubleConstant.zero,
-          selectedItemColor: ColorConstant.secondary,
+          selectedItemColor: const Color(0xFF8B5CF6),
           unselectedItemColor: ColorConstant.turquoise,
           type: BottomNavigationBarType.fixed,
           selectedLabelStyle: context.general.textTheme.bodySmall?.copyWith(
-            fontWeight: FontWeight.bold,
+            fontWeight: FontWeight.w600,
           ),
           unselectedLabelStyle: context.general.textTheme.bodySmall?.copyWith(
-            fontWeight: FontWeight.normal,
+            fontWeight: FontWeight.w500,
           ),
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
