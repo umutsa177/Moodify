@@ -9,13 +9,12 @@ import 'package:moodify/product/constant/double_constant.dart';
 import 'package:moodify/product/enum/icon_constant.dart';
 
 mixin NavBarMixin on State<NavBar> {
-  late final int selectedIndex;
+  int selectedIndex = 0;
   late final List<Widget> pages;
 
   @override
   void initState() {
     super.initState();
-    selectedIndex = 0;
     pages = [
       FeedView(mood: widget.mood),
       const ProfileView(),

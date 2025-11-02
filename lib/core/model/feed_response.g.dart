@@ -16,6 +16,7 @@ Map<String, dynamic> _$FeedResponseToJson(FeedResponse instance) =>
     <String, dynamic>{'videos': instance.videos};
 
 Video _$VideoFromJson(Map<String, dynamic> json) => Video(
+  uri: json['uri'] as String,
   name: json['name'] as String,
   duration: (json['duration'] as num).toInt(),
   pictures: Pictures.fromJson(json['pictures'] as Map<String, dynamic>),
@@ -24,6 +25,7 @@ Video _$VideoFromJson(Map<String, dynamic> json) => Video(
 );
 
 Map<String, dynamic> _$VideoToJson(Video instance) => <String, dynamic>{
+  'uri': instance.uri,
   'name': instance.name,
   'duration': instance.duration,
   'pictures': instance.pictures,

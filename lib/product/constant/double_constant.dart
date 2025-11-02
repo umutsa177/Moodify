@@ -5,6 +5,8 @@ final class DoubleConstant {
   const DoubleConstant._();
 
   static const double termsLetterSpacing = -0.75;
+  static const double aspectRatio = 16 / 9;
+
   static const double zero = 0;
   static const double two = 2;
   static const double four = 4;

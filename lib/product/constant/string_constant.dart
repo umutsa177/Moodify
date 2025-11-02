@@ -59,6 +59,12 @@ final class StringConstant {
   static const String videosNotFound = 'No videos found or connection error';
   static const String notPlayable = 'Video do not playable';
   static const String notLoaded = 'Video failed to load';
+  static const String pullToRefresh = 'Pull down to refresh';
+  static const String removeVideoSuccess = 'Video removed from saved';
+  static const String videoSaved = 'Video saved!';
+
+  // Profile
+  static const String myProfile = 'My Profile';
 
   // supabase
   static const String supabaseRedirectUri =

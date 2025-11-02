@@ -120,6 +120,7 @@ final class AppTheme {
             side: const BorderSide(color: ColorConstant.transparent),
           ),
         ),
+        scaffoldBackgroundColor: ColorConstant.transparent,
         appBarTheme: const AppBarTheme(
           backgroundColor: ColorConstant.transparent,
           centerTitle: true,

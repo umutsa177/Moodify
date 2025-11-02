@@ -1,13 +1,17 @@
 part of '../view/feed_view.dart';
 
+@immutable
 final class _FeedCard extends StatelessWidget {
   const _FeedCard({
+    required this.videoId,
     required this.thumbnail,
     required this.title,
     required this.duration,
     required this.videoUrl,
     required this.onTap,
   });
+
+  final String videoId;
   final String thumbnail;
   final String title;
   final String duration;
@@ -28,7 +32,6 @@ final class _FeedCard extends StatelessWidget {
             fit: BoxFit.cover,
           ),
         ),
-        // Color Overlay
         child: Container(
           decoration: BoxDecoration(
             borderRadius: context.border.highBorderRadius,
@@ -42,12 +45,28 @@ final class _FeedCard extends StatelessWidget {
             ),
           ),
           padding: context.padding.normal,
-          alignment: Alignment.bottomLeft,
-          child: Row(
+          child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              _feedCardTitle(context),
-              _feedCardAction(context),
+              // Save Button
+              Align(
+                alignment: Alignment.topRight,
+                child: _SaveButton(
+                  videoId: videoId,
+                  thumbnail: thumbnail,
+                  title: title,
+                  duration: duration,
+                  videoUrl: videoUrl,
+                ),
+              ),
+              // Title and actions section
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  _feedCardTitle(context),
+                  _feedCardAction(context),
+                ],
+              ),
             ],
           ),
         ),
@@ -59,7 +78,6 @@ final class _FeedCard extends StatelessWidget {
     return Row(
       spacing: DoubleConstant.eight,
       children: [
-        // Duration Title
         Chip(
           label: Text(duration),
           backgroundColor: ColorConstant.onPrimary,
@@ -67,7 +85,6 @@ final class _FeedCard extends StatelessWidget {
             color: ColorConstant.secondary,
           ),
         ),
-        // Play Button
         Container(
           padding: context.padding.low,
           decoration: BoxDecoration(

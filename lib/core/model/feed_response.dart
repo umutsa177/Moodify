@@ -15,20 +15,26 @@ class FeedResponse {
 @JsonSerializable()
 class Video {
   Video({
+    required this.uri,
     required this.name,
     required this.duration,
     required this.pictures,
     this.link,
-    this.playerEmbedUrl, // EKLE
+    this.playerEmbedUrl,
   });
 
   factory Video.fromJson(Map<String, dynamic> json) => _$VideoFromJson(json);
+
+  final String uri;
   final String name;
   final int duration;
   final Pictures pictures;
   final String? link;
   @JsonKey(name: 'player_embed_url')
   final String? playerEmbedUrl;
+
+  String get videoId => uri.split('/').last;
+
   Map<String, dynamic> toJson() => _$VideoToJson(this);
 }
 

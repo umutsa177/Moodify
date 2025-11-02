@@ -1,0 +1,1 @@
+enum VideoViewType { list, grid }

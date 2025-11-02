@@ -1,6 +1,9 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:hive_ce_flutter/hive_flutter.dart';
+import 'package:moodify/core/model/saved_video.dart';
+import 'package:moodify/product/constant/double_constant.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 @immutable
@@ -9,8 +12,8 @@ final class AppStart {
 
   static final Dio _dio = Dio(
     BaseOptions(
-      connectTimeout: const Duration(seconds: 10),
-      receiveTimeout: const Duration(seconds: 10),
+      connectTimeout: Duration(seconds: DoubleConstant.twelve.toInt()),
+      receiveTimeout: Duration(seconds: DoubleConstant.twelve.toInt()),
     ),
   );
 
@@ -45,9 +48,15 @@ final class AppStart {
       vimeoAccessToken = '';
     }
 
+    // Supabase initialization
     await Supabase.initialize(
       url: supabaseUrl,
       anonKey: supabaseAnonKey,
     );
+
+    // Hive initialization
+    await Hive.initFlutter();
+    Hive.registerAdapter(SavedVideoAdapter());
+    await Hive.openBox<SavedVideo>('saved_videos');
   }
 }
