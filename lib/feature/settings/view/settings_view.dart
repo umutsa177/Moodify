@@ -10,7 +10,6 @@ import 'package:moodify/core/router/app_router.dart';
 import 'package:moodify/product/constant/color_constant.dart';
 import 'package:moodify/product/constant/double_constant.dart';
 import 'package:moodify/product/constant/string_constant.dart';
-import 'package:moodify/product/extension/loading_extension.dart';
 import 'package:moodify/product/extension/toast_extension.dart';
 import 'package:provider/provider.dart';
 
@@ -188,18 +187,16 @@ class SettingsView extends StatelessWidget {
 
   // Change Password Dialog
   Future<void> changePasswordDialog(BuildContext context) async {
-    final currentPasswordController = TextEditingController();
     final newPasswordController = TextEditingController();
     final confirmPasswordController = TextEditingController();
-    var obscureCurrentPassword = true;
     var obscureNewPassword = true;
     var obscureConfirmPassword = true;
-    var isLoading = false;
 
     await showDialog<void>(
       context: context,
+      barrierDismissible: false,
       builder: (dialogContext) => StatefulBuilder(
-        builder: (context, setState) => AlertDialog(
+        builder: (builderContext, setState) => AlertDialog(
           backgroundColor: ColorConstant.onSecondary,
           shape: RoundedRectangleBorder(
             borderRadius: dialogContext.border.normalBorderRadius,
@@ -215,38 +212,6 @@ class SettingsView extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                // Current Password
-                TextField(
-                  controller: currentPasswordController,
-                  obscureText: obscureCurrentPassword,
-                  style: const TextStyle(color: ColorConstant.primary),
-                  decoration: InputDecoration(
-                    labelText: StringConstant.currentPassword,
-                    labelStyle: TextStyle(
-                      color: ColorConstant.videoCloseColor,
-                    ),
-                    filled: true,
-                    fillColor: ColorConstant.onPrimaryLight,
-                    border: OutlineInputBorder(
-                      borderRadius: dialogContext.border.lowBorderRadius,
-                      borderSide: BorderSide.none,
-                    ),
-                    suffixIcon: IconButton(
-                      icon: Icon(
-                        obscureCurrentPassword
-                            ? Icons.visibility_off
-                            : Icons.visibility,
-                        color: ColorConstant.videoCloseColor,
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          obscureCurrentPassword = !obscureCurrentPassword;
-                        });
-                      },
-                    ),
-                  ),
-                ),
-                context.sized.emptySizedHeightBoxLow3x,
                 // New Password
                 TextField(
                   controller: newPasswordController,
@@ -278,14 +243,14 @@ class SettingsView extends StatelessWidget {
                     ),
                   ),
                 ),
-                context.sized.emptySizedHeightBoxLow3x,
+                dialogContext.sized.emptySizedHeightBoxLow3x,
                 // Confirm Password
                 TextField(
                   controller: confirmPasswordController,
                   obscureText: obscureConfirmPassword,
                   style: const TextStyle(color: ColorConstant.primary),
                   decoration: InputDecoration(
-                    labelText: '${StringConstant.confirmPassword} (Again)',
+                    labelText: StringConstant.confirmPassword,
                     labelStyle: TextStyle(
                       color: ColorConstant.videoCloseColor,
                     ),
@@ -315,9 +280,7 @@ class SettingsView extends StatelessWidget {
           ),
           actions: [
             TextButton(
-              onPressed: isLoading
-                  ? null
-                  : () => context.route.pop(dialogContext),
+              onPressed: () => dialogContext.route.pop(false),
               child: Text(
                 StringConstant.cancel,
                 style: dialogContext.general.textTheme.bodyLarge?.copyWith(
@@ -326,61 +289,63 @@ class SettingsView extends StatelessWidget {
               ),
             ),
             ElevatedButton(
-              onPressed: isLoading
-                  ? null
-                  : () async {
-                      if (newPasswordController.text.isEmpty ||
-                          currentPasswordController.text.isEmpty) {
-                        await ToastExtension.showToast(
-                          message: StringConstant.fillAllFields,
-                          backgroundColor: ColorConstant.error,
-                          context: context,
-                        );
-                        return;
-                      }
+              onPressed: () async {
+                // Validations
+                if (newPasswordController.text.isEmpty) {
+                  await ToastExtension.showToast(
+                    message: StringConstant.fillAllFields,
+                    backgroundColor: ColorConstant.error,
+                    context: context,
+                  );
+                  return;
+                }
 
-                      if (newPasswordController.text !=
-                          confirmPasswordController.text) {
-                        await ToastExtension.showToast(
-                          message: StringConstant.passwordsNotMatch,
-                          backgroundColor: ColorConstant.error,
-                          context: context,
-                        );
-                        return;
-                      }
+                if (newPasswordController.text !=
+                    confirmPasswordController.text) {
+                  await ToastExtension.showToast(
+                    message: StringConstant.passwordsNotMatch,
+                    backgroundColor: ColorConstant.error,
+                    context: context,
+                  );
+                  return;
+                }
 
-                      if (newPasswordController.text.length < 6) {
-                        await ToastExtension.showToast(
-                          message: StringConstant.passwordMustBeSixCharacters,
-                          backgroundColor: ColorConstant.error,
-                          context: context,
-                        );
-                        return;
-                      }
+                if (newPasswordController.text.length < 6) {
+                  await ToastExtension.showToast(
+                    message: StringConstant.passwordMustBeSixCharacters,
+                    backgroundColor: ColorConstant.error,
+                    context: context,
+                  );
+                  return;
+                }
 
-                      setState(() => isLoading = true);
+                // Change password
+                final success = await context
+                    .read<AuthProvider>()
+                    .changePassword(newPasswordController.text);
 
-                      final success = await context
-                          .read<AuthProvider>()
-                          .changePassword(newPasswordController.text);
+                // Dispose controllers
+                newPasswordController.dispose();
+                confirmPasswordController.dispose();
 
-                      setState(() => isLoading = false);
+                if (!builderContext.mounted) return;
 
-                      if (dialogContext.mounted) {
-                        await context.route.pop(dialogContext);
-                        if (context.mounted) {
-                          await ToastExtension.showToast(
-                            message: success
-                                ? StringConstant.passwordChanged
-                                : StringConstant.passwordChangeFailed,
-                            backgroundColor: success
-                                ? ColorConstant.success
-                                : ColorConstant.error,
-                            context: context,
-                          );
-                        }
-                      }
-                    },
+                // Close dialog
+                if (dialogContext.mounted) await dialogContext.route.pop();
+
+                // Toast göster
+                if (context.mounted) {
+                  await ToastExtension.showToast(
+                    message: success
+                        ? StringConstant.passwordChanged
+                        : StringConstant.passwordChangeFailed,
+                    backgroundColor: success
+                        ? ColorConstant.success
+                        : ColorConstant.error,
+                    context: context,
+                  );
+                }
+              },
               style: ElevatedButton.styleFrom(
                 backgroundColor: ColorConstant.primary,
                 foregroundColor: ColorConstant.onPrimary,
@@ -388,25 +353,18 @@ class SettingsView extends StatelessWidget {
                   borderRadius: dialogContext.border.lowBorderRadius,
                 ),
               ),
-              child: isLoading
-                  ? LoadingExtension.loadingBar(dialogContext)
-                  : Text(
-                      StringConstant.change,
-                      style: dialogContext.general.textTheme.bodyLarge
-                          ?.copyWith(
-                            color: ColorConstant.onSecondary,
-                            fontWeight: FontWeight.w600,
-                          ),
-                    ),
+              child: Text(
+                StringConstant.change,
+                style: dialogContext.general.textTheme.bodyLarge?.copyWith(
+                  color: ColorConstant.onSecondary,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
             ),
           ],
         ),
       ),
     );
-
-    currentPasswordController.dispose();
-    newPasswordController.dispose();
-    confirmPasswordController.dispose();
   }
 
   // Delete Account Dialog
@@ -437,7 +395,6 @@ class SettingsView extends StatelessWidget {
               ),
             ),
             context.sized.emptySizedHeightBoxLow3x,
-
             Text(
               StringConstant.deleteYourAccountSubtitle,
               style: context.general.textTheme.bodyMedium?.copyWith(
@@ -486,33 +443,40 @@ class SettingsView extends StatelessWidget {
     );
 
     if (confirmed ?? false) {
-      // Clear Hive cache
+      // Clear cache
       try {
-        final box = await Hive.openBox<SavedVideo>('saved_videos_box');
-        await box.clear();
-        await box.close();
+        if (Hive.isBoxOpen('saved_videos_box')) {
+          final box = Hive.box<SavedVideo>('saved_videos_box');
+          await box.clear();
+        } else {
+          final box = await Hive.openBox<SavedVideo>('saved_videos_box');
+          await box.clear();
+          await box.close();
+        }
+        if (kDebugMode) log('Cache cleared successfully');
       } on Exception catch (e) {
-        if (kDebugMode) log('Hive could not be cleared: $e');
+        if (kDebugMode) log('Cache could not be cleared: $e');
       }
 
       // Delete account
       final success = await context.read<AuthProvider>().deleteAccount();
 
-      if (success && context.mounted) {
-        await ToastExtension.showToast(
-          message: StringConstant.accountDeleted,
-          backgroundColor: ColorConstant.success,
-          context: context,
-        );
-        // Navigate to the splash screen
-        if (context.mounted) {
-          await Navigator.of(context).pushNamedAndRemoveUntil(
-            AppRouter.splash,
-            (route) => false,
+      if (context.mounted) {
+        if (success) {
+          await ToastExtension.showToast(
+            message: StringConstant.accountDeleted,
+            backgroundColor: ColorConstant.success,
+            context: context,
           );
-        }
-      } else {
-        if (context.mounted) {
+
+          // Redirect to splash view
+          if (context.mounted) {
+            await Navigator.of(context).pushNamedAndRemoveUntil(
+              AppRouter.splash,
+              (route) => false,
+            );
+          }
+        } else {
           await ToastExtension.showToast(
             message: StringConstant.accountDeleteFailed,
             backgroundColor: ColorConstant.error,

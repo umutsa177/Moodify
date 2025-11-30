@@ -69,11 +69,17 @@ mixin ProfileMixin {
     );
 
     if (shouldLogout ?? false) {
-      // Clear saved vdieos cache
+      // Clear saved videos cache
       try {
-        final box = await Hive.openBox<SavedVideo>('saved_videos_box');
-        await box.clear();
-        await box.close();
+        if (Hive.isBoxOpen('saved_videos_box')) {
+          final box = Hive.box<SavedVideo>('saved_videos_box');
+          await box.clear();
+        } else {
+          final box = await Hive.openBox<SavedVideo>('saved_videos_box');
+          await box.clear();
+          await box.close();
+        }
+        if (kDebugMode) log('Cache cleared successfully');
       } on Exception catch (e) {
         if (kDebugMode) log('Cache could not be cleared: $e');
       }

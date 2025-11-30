@@ -69,10 +69,19 @@ class AuthService {
   // Delete Account
   Future<void> deleteAccount() async {
     final userId = _supabase.auth.currentUser?.id;
-    if (userId == null && kDebugMode) log('No user logged in');
+    if (userId == null) {
+      if (kDebugMode) log('No user logged in');
+    }
 
-    // Delete user from auth (cascade delete profiles and saved_videos)
-    await _supabase.rpc<void>('delete_user');
+    try {
+      // Delete user
+      await _supabase.rpc<void>('delete_user');
+
+      // Clear session
+      await _supabase.auth.signOut();
+    } on Exception catch (e) {
+      if (kDebugMode) log('Error deleting account: $e');
+    }
   }
 
   // Check if user is email provider
