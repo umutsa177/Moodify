@@ -20,13 +20,10 @@ final class _FacebookLoginButton extends StatelessWidget {
           foregroundColor: ColorConstant.primary,
         ),
         icon: authProvider.isFacebookLoading
-            ? const SizedBox(
+            ? SizedBox(
                 width: DoubleConstant.twentyFour,
                 height: DoubleConstant.twentyFour,
-                child: CircularProgressIndicator(
-                  color: ColorConstant.primary,
-                  strokeWidth: DoubleConstant.two,
-                ),
+                child: LoadingExtension.loadingBar(context),
               )
             : const Icon(
                 Icons.facebook,

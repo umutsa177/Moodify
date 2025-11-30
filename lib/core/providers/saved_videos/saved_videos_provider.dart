@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:developer';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_ce_flutter/hive_flutter.dart';
 import 'package:moodify/core/model/saved_video.dart';
@@ -85,7 +86,7 @@ class SavedVideosProvider with ChangeNotifier {
         'saved_at': video.savedAt.toIso8601String(),
       });
     } on Exception catch (e) {
-      log('Failed to sync video to cloud: $e');
+      if (kDebugMode) log('Failed to sync video to cloud: $e');
     }
   }
 
@@ -101,7 +102,7 @@ class SavedVideosProvider with ChangeNotifier {
           .eq('user_id', user.id)
           .eq('video_id', videoId);
     } on Exception catch (e) {
-      log('Failed to remove video from cloud: $e');
+      if (kDebugMode) log('Failed to remove video from cloud: $e');
     }
   }
 
@@ -154,7 +155,7 @@ class SavedVideosProvider with ChangeNotifier {
       _savedVideos = _box.values.toList()
         ..sort((a, b) => b.savedAt.compareTo(a.savedAt));
     } on Exception catch (e) {
-      log('Sync failed: $e');
+      if (kDebugMode) log('Sync failed: $e');
       // Continue with local data
     } finally {
       _isSyncing = false;
@@ -176,7 +177,7 @@ class SavedVideosProvider with ChangeNotifier {
         await _supabase.from('saved_videos').delete().eq('user_id', user.id);
       }
     } on Exception catch (e) {
-      log('Failed to clear cloud data: $e');
+      if (kDebugMode) log('Failed to clear cloud data: $e');
     }
   }
 }

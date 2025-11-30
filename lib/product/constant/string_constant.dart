@@ -65,11 +65,71 @@ final class StringConstant {
 
   // Profile
   static const String myProfile = 'My Profile';
+  static const String savedVideos = 'Your Saved Videos';
+  static const String savedVideosEmpty = 'No saved videos yet';
+  static const String savedVideoSearchEmpty = 'No videos found for';
+  static const String searchSavedVideo = 'Search saved videos';
+  static const String noVideos = 'No videos found';
+  static const String logoutAccount = 'Are you sure you want to log out?';
+
+  // Edit Profile
+  static const String editProfile = 'Edit Profile';
+  static const String chooseImageSource = 'Choose Image Source';
+  static const String gallery = 'Gallery';
+  static const String camera = 'Camera';
+  static const String notEmail = 'Email not found';
+  static const String username = 'Username';
+  static const String nameHint = 'Enter your username';
+  static const String deleteAvatar = 'Delete Profile Photo';
+  static const String deletedAvatar = 'Profile photo deleted';
+  static const String deleteAvatarError = 'Error while deleting profile photo';
+  static const String nameCannotBeEmpty = 'Username cannot be empty';
+  static const String uploadAvatarError = 'Avatar upload failed';
+  static const String updateProfileError = 'Profile update failed';
+  static const String updateProfileSuccess = 'Profile updated successfully';
+  static const String deleteYourAvatar =
+      'Are you sure you want to delete your profile photo?';
+
+  // Settings
+  static const String selectionLanguage = 'Language Selection';
+  static const String eng = 'English';
+  static const String tur = 'Turkish';
+  static const String changePassword = 'Change Password';
+  static const String currentPassword = 'Current Password';
+  static const String newPassword = 'New Password';
+  static const String updatePassword = 'Update your password';
+  static const String deleteAccount = 'Delete Account';
+  static const String deleteAccountSubtitle = 'Permanently delete your account';
+  static const String fillAllFields = 'Fill in all fields';
+  static const String passwordsNotMatch = 'Passwords do not match';
+  static const String passwordMustBeSixCharacters =
+      'Password must be at least 6 characters';
+  static const String passwordChanged = 'Password changed successfully';
+  static const String passwordChangeFailed = 'Password change failed';
+  static const String deleteYourAccount =
+      'Are you sure you want to delete your account?';
+  static const String deleteYourAccountSubtitle =
+      'This action cannot be undone and the following will be deleted:';
+  static const String deleteYourAccountDatas =
+      '• Your profile information\n• Your saved videos\n• All datas';
+  static const String accountDeleted = 'Your account has been deleted';
+  static const String accountDeleteFailed = 'Account deletion failed';
+
+  // Other
+  static const String okey = 'OK';
+  static const String loading = 'Loading...';
+  static const String tryAgain = 'Try Again';
+  static const String cancel = 'Cancel';
+  static const String save = 'Save';
+  static const String delete = 'Delete';
+  static const String change = 'Change';
+
+  // Tooltips
+  static const String remove = 'Remove';
+  static const String signOut = 'Sign out';
+  static const String settings = 'Settings';
 
   // supabase
   static const String supabaseRedirectUri =
       'com.umutsayar.moodify://oauth2redirect';
-
-  static const String loading = 'Loading...';
-  static const String tryAgain = 'Try Again';
 }

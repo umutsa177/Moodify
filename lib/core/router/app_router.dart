@@ -5,6 +5,8 @@ import 'package:moodify/feature/auth/verification/view/email_verification_view.d
 import 'package:moodify/feature/feed/view/feed_view.dart';
 import 'package:moodify/feature/mood_selection/view/mood_selection_view.dart';
 import 'package:moodify/feature/navBar/view/nav_bar.dart';
+import 'package:moodify/feature/edit_profile/view/edit_profile_view.dart';
+import 'package:moodify/feature/settings/view/settings_view.dart';
 import 'package:moodify/feature/splash/view/splash_view.dart';
 import 'package:moodify/product/enum/moods.dart';
 
@@ -18,6 +20,8 @@ class AppRouter {
   static const String emailVerification = '/email-verification';
   static const String navbar = '/navbar';
   static const String feed = '/feed';
+  static const String editProfile = '/edit-profile';
+  static const String settingsView = '/settings';
 
   static Route<dynamic> routes(RouteSettings settings) {
     switch (settings.name) {
@@ -31,6 +35,10 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const SignInView());
       case emailVerification:
         return MaterialPageRoute(builder: (_) => const EmailVerificationView());
+      case editProfile:
+        return MaterialPageRoute(builder: (_) => const EditProfileView());
+      case settingsView:
+        return MaterialPageRoute(builder: (_) => const SettingsView());
       case navbar:
         final mood = settings.arguments! as Moods;
         return MaterialPageRoute(

@@ -1,10 +1,10 @@
 name: moodify
-description: "A new Flutter project."
+description: "An application that recommends videos to you based on your daily mood."
 publish_to: "none"
 version: 1.0.0
 
 environment:
-  sdk: ^3.9.0
+  sdk: ">=3.10.0-0 <4.0.0"
 
 dependencies:
   flutter:
@@ -28,13 +28,13 @@ dependencies:
   webview_flutter: ^4.13.0
 
   # Icon
-  flutter_svg: ^2.2.1
+  flutter_svg: ^2.2.3
 
   # Image
   image_picker: ^1.2.0
 
   # Toast
-  fluttertoast: ^8.2.12
+  fluttertoast: ^9.0.0
 
   # Json Serialization
   json_annotation: ^4.9.0
@@ -55,7 +55,7 @@ dev_dependencies:
     sdk: flutter
 
   # Code Generator
-  build_runner: ^2.9.0
+  build_runner: ^2.10.3
   json_serializable: ^6.11.1
   hive_ce_generator: ^1.10.0
 

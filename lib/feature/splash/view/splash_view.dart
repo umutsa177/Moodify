@@ -6,6 +6,7 @@ import 'package:moodify/feature/splash/mixin/splash_mixin.dart';
 import 'package:moodify/product/constant/color_constant.dart';
 import 'package:moodify/product/constant/double_constant.dart';
 import 'package:moodify/product/constant/string_constant.dart';
+import 'package:moodify/product/extension/loading_extension.dart';
 import 'package:provider/provider.dart';
 
 part '../widget/terms_text.dart';

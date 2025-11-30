@@ -1,9 +1,6 @@
-# Very Good Analysis konfigürasyonu
 include: package:very_good_analysis/analysis_options.yaml
 
-# Analyzer ayarları
 analyzer:
-  # Exclude edilecek dosyalar/klasörler
   exclude:
     - "**/*.g.dart"
     - "**/*.freezed.dart"
@@ -17,21 +14,71 @@ analyzer:
     - "linux/**"
     - "macos/**"
 
-  # Güçlü mod etkinleştir
-  strong-mode:
-    implicit-casts: false
-    implicit-dynamic: false
-
-  # Language ayarları
   language:
     strict-casts: true
     strict-inference: true
     strict-raw-types: true
 
-# Linter kuralları
+  errors:
+    deprecated_member_use: warning
+    deprecated_member_use_from_same_package: warning
+
+    invalid_annotation_target: error
+    invalid_use_of_internal_member: error
+    invalid_use_of_protected_member: error
+    invalid_use_of_visible_for_testing_member: error
+
+    dead_code: info
+    dead_code_catch_following_catch: warning
+
+    unnecessary_null_checks: warning
+    unnecessary_null_aware_assignments: warning
+
 linter:
   rules:
-    # Very Good Analysis'de olmayan ama eklemek isteyebileceğiniz kurallar
-    avoid_print: true # print() kullanımını yasaklar
-    prefer_single_quotes: true # Tek tırnak kullanımını zorlar
-    public_member_api_docs: false # Public member dokümantasyonu zorunluluğunu kaldırır
+    # Temel kurallar
+    avoid_print: true
+    prefer_single_quotes: true
+    public_member_api_docs: false
+
+    # Dart 3.10+ önerilen kurallar
+    use_super_parameters: true
+    avoid_redundant_argument_values: true
+    prefer_const_constructors: true
+    prefer_const_declarations: true
+    prefer_const_literals_to_create_immutables: true
+
+    # Kod kalitesi
+    always_declare_return_types: true
+    avoid_empty_else: true
+    avoid_unnecessary_containers: true
+    sized_box_for_whitespace: true
+    use_key_in_widget_constructors: true
+
+    # Modern Dart özellikleri
+    unnecessary_late: true
+    use_enums: true
+
+    # Null safety
+    unnecessary_null_checks: true
+    unnecessary_null_in_if_null_operators: true
+
+    # Performans
+    prefer_for_elements_to_map_fromIterable: true
+    prefer_if_elements_to_conditional_expressions: true
+    prefer_spread_collections: true
+
+    # Stil ve okunabilirlik
+    sort_child_properties_last: true
+    sort_constructors_first: true
+    avoid_types_on_closure_parameters: true
+
+    # Hata önleme
+    avoid_dynamic_calls: true
+    avoid_slow_async_io: true
+    cancel_subscriptions: true
+    close_sinks: true
+
+    # Flutter spesifik
+    use_build_context_synchronously: true
+    avoid_web_libraries_in_flutter: true

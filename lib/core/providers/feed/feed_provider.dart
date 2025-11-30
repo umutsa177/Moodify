@@ -2,11 +2,13 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_ce_flutter/hive_flutter.dart';
 import 'package:moodify/core/model/feed_response.dart';
 import 'package:moodify/core/network/feed_network_manager.dart';
 import 'package:moodify/core/providers/feed/feed_state.dart';
+import 'package:moodify/product/constant/double_constant.dart';
 import 'package:moodify/product/enum/moods.dart';
 
 class FeedProvider with ChangeNotifier {
@@ -25,7 +27,9 @@ class FeedProvider with ChangeNotifier {
 
   // Cache constants
   static const String _cacheBoxName = 'feed_first_page_cache';
-  static const Duration _cacheValidDuration = Duration(hours: 3);
+  static final Duration _cacheValidDuration = Duration(
+    hours: DoubleConstant.two.toInt(),
+  );
   late Box<String> _cacheBox;
 
   Future<void> _init() async {
@@ -78,12 +82,14 @@ class FeedProvider with ChangeNotifier {
           .map((e) => Video.fromJson(e as Map<String, dynamic>))
           .toList();
 
-      log(
-        '✅ Loaded ${videos.length} videos from cache for ${_mood.label}',
-      );
+      if (kDebugMode) {
+        log(
+          '✅ Loaded ${videos.length} videos from cache for ${_mood.label}',
+        );
+      }
       return videos;
     } on Exception catch (e) {
-      log('❌ Cache load failed: $e');
+      if (kDebugMode) log('❌ Cache load failed: $e');
       return null;
     }
   }
@@ -105,9 +111,11 @@ class FeedProvider with ChangeNotifier {
         DateTime.now().millisecondsSinceEpoch.toString(),
       );
 
-      log('💾 Cached ${videos.length} videos for ${_mood.label}');
+      if (kDebugMode) {
+        log('💾 Cached ${videos.length} videos for ${_mood.label}');
+      }
     } on Exception catch (e) {
-      log('❌ Cache save failed: $e');
+      if (kDebugMode) log('❌ Cache save failed: $e');
     }
   }
 
@@ -134,7 +142,9 @@ class FeedProvider with ChangeNotifier {
   // Refresh first page in background (silent update)
   Future<void> _refreshFirstPage() async {
     try {
-      log('🔄 Refreshing first page cache for ${_mood.label}...');
+      if (kDebugMode) {
+        log('🔄 Refreshing first page cache for ${_mood.label}...');
+      }
 
       final data = await _service.fetchVideos(
         mood: _mood.label.toLowerCase(),
@@ -165,10 +175,10 @@ class FeedProvider with ChangeNotifier {
         final remainingVideos = _state.videos.skip(10).toList();
         _state = _state.copyWith(videos: [...newVideos, ...remainingVideos]);
         notifyListeners();
-        log('✨ First page updated with fresh data');
+        if (kDebugMode) log('✨ First page updated with fresh data');
       }
     } on Exception catch (e) {
-      log('❌ Background refresh failed: $e');
+      if (kDebugMode) log('❌ Background refresh failed: $e');
     }
   }
 
@@ -212,12 +222,14 @@ class FeedProvider with ChangeNotifier {
       );
       _currentPage++;
 
-      log(
-        '📥 Loaded page ${_currentPage - 1} for ${_mood.label}: ${newVideos.length} videos',
-      );
+      if (kDebugMode) {
+        log(
+          '📥 Loaded page ${_currentPage - 1} for ${_mood.label}: ${newVideos.length} videos',
+        );
+      }
     } on Exception catch (e) {
       _state = _state.copyWith(error: e.toString(), isLoading: false);
-      log('❌ Load more failed: $e');
+      if (kDebugMode) log('❌ Load more failed: $e');
     } finally {
       _fetching = false;
       notifyListeners();
@@ -229,7 +241,7 @@ class FeedProvider with ChangeNotifier {
     //  Check internet connection
     final hasInternet = await _hasInternetConnection();
     if (!hasInternet) {
-      log('❌ No internet connection, skipping refresh');
+      if (kDebugMode) log('❌ No internet connection, skipping refresh');
       return;
     }
 
@@ -246,10 +258,8 @@ class FeedProvider with ChangeNotifier {
         mood: _mood.label.toLowerCase(),
       );
 
-      if (data == null) return log('Network returned null');
-
       final response = FeedResponse.fromJson({
-        'videos': (data['data'] as List?) ?? [],
+        'videos': (data?['data'] as List?) ?? [],
       });
 
       final freshVideos = response.videos;
@@ -298,9 +308,9 @@ class FeedProvider with ChangeNotifier {
     try {
       await _cacheBox.delete(_getCacheKey());
       await _cacheBox.delete(_getCacheTimeKey());
-      log('🗑️ Cache cleared for ${_mood.label}');
+      if (kDebugMode) log('🗑️ Cache cleared for ${_mood.label}');
     } on Exception catch (e) {
-      log('❌ Cache clear failed: $e');
+      if (kDebugMode) log('❌ Cache clear failed: $e');
     }
   }
 }

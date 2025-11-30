@@ -1,20 +1,24 @@
+import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'feed_response.g.dart';
 
 @JsonSerializable()
-class FeedResponse {
-  FeedResponse({required this.videos});
+class FeedResponse extends Equatable {
+  const FeedResponse({required this.videos});
 
   factory FeedResponse.fromJson(Map<String, dynamic> json) =>
       _$FeedResponseFromJson(json);
   final List<Video> videos;
   Map<String, dynamic> toJson() => _$FeedResponseToJson(this);
+
+  @override
+  List<Object?> get props => [videos];
 }
 
 @JsonSerializable()
-class Video {
-  Video({
+class Video extends Equatable {
+  const Video({
     required this.uri,
     required this.name,
     required this.duration,
@@ -36,21 +40,27 @@ class Video {
   String get videoId => uri.split('/').last;
 
   Map<String, dynamic> toJson() => _$VideoToJson(this);
+
+  @override
+  List<Object?> get props => [uri, name, duration, pictures, link];
 }
 
 @JsonSerializable()
-class Pictures {
-  Pictures({required this.sizes});
+class Pictures extends Equatable {
+  const Pictures({required this.sizes});
 
   factory Pictures.fromJson(Map<String, dynamic> json) =>
       _$PicturesFromJson(json);
   final List<Size> sizes;
   Map<String, dynamic> toJson() => _$PicturesToJson(this);
+
+  @override
+  List<Object?> get props => [sizes];
 }
 
 @JsonSerializable()
-class Size {
-  Size({
+class Size extends Equatable {
+  const Size({
     this.width,
     this.link,
   });
@@ -59,4 +69,7 @@ class Size {
   final int? width;
   final String? link;
   Map<String, dynamic> toJson() => _$SizeToJson(this);
+
+  @override
+  List<Object?> get props => [width, link];
 }

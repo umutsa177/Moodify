@@ -5,12 +5,16 @@ final class ColorConstant {
   const ColorConstant._();
 
   static const Color primary = Colors.white;
+  static const Color emojiColor = Colors.white12;
   static const Color primaryLight = Colors.white70;
   static const Color emailBackground = Colors.white54;
-  static const Color emojiColor = Colors.white12;
   static final Color onPrimary = Colors.white.withValues(alpha: .8);
-  static const Color onTertiary = Colors.black54;
+  static final Color onPrimaryLight = Colors.white.withValues(
+    alpha: .2,
+  );
 
+  static const Color onTertiary = Colors.black54;
+  static final Color tertiary = Colors.black.withValues(alpha: .6);
   static const Color secondary = Colors.black;
   static const Color onSecondary = Colors.black87;
   static const Color turquoise = Color(0xFF4F8096);
@@ -19,6 +23,16 @@ final class ColorConstant {
   static const Color transparent = Colors.transparent;
   static const Color error = Colors.red;
   static const Color success = Colors.green;
+
+  static final Color videoListSectionColor = Colors.white.withValues(alpha: .3);
+  static final Color videoErrorColor = Colors.white.withValues(alpha: .5);
+  static final Color videoDurationColor = Colors.white.withValues(alpha: .6);
+  static final Color videoCloseColor = Colors.white.withValues(alpha: .7);
+  static final Color videoPlayColor = Colors.white.withValues(alpha: .8);
+  static final Color userNameInputColor = Colors.white.withValues(alpha: .1);
+  static final Color emailDecorationColor = Colors.white.withValues(
+    alpha: .05,
+  );
 
   static final Color navBarButtonShadowColor = const Color(
     0xFF8B5CF6,

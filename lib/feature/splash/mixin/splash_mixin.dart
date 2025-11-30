@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:app_links/app_links.dart';
 import 'package:flutter/material.dart';
 import 'package:kartal/kartal.dart';
@@ -5,6 +7,7 @@ import 'package:moodify/core/providers/auth/auth_provider.dart';
 import 'package:moodify/core/router/app_router.dart';
 import 'package:moodify/feature/splash/view/splash_view.dart';
 import 'package:moodify/product/constant/color_constant.dart';
+import 'package:moodify/product/constant/double_constant.dart';
 import 'package:moodify/product/constant/string_constant.dart';
 import 'package:moodify/product/enum/auth_status.dart';
 import 'package:provider/provider.dart';
@@ -14,9 +17,9 @@ mixin SplashMixin on State<SplashView> {
   final _appLinks = AppLinks();
 
   @override
-  Future<void> initState() async {
+  void initState() {
     super.initState();
-    await initDeepLinks();
+    unawaited(initDeepLinks());
     if (mounted) checkAuth(context);
   }
 
@@ -30,7 +33,7 @@ mixin SplashMixin on State<SplashView> {
         );
       }
 
-      // Hata mesajını göster
+      // Show auth error
       if (authProvider.status == AuthStatus.error &&
           authProvider.errorMessage != null &&
           context.mounted) {
@@ -39,7 +42,7 @@ mixin SplashMixin on State<SplashView> {
             content: Text(authProvider.errorMessage!),
             backgroundColor: ColorConstant.error,
             action: SnackBarAction(
-              label: 'OK',
+              label: StringConstant.okey,
               textColor: ColorConstant.primary,
               onPressed: authProvider.clearError,
             ),
@@ -52,14 +55,17 @@ mixin SplashMixin on State<SplashView> {
   // Initialize deep link
   Future<void> initDeepLinks() async {
     // Listen to the deep connections that come when the application is open
-    _appLinks.uriLinkStream.listen((Uri? uri) async {
-      if (uri != null &&
-          uri.toString().startsWith(StringConstant.supabaseRedirectUri)) {
-        // Supabase redirect URI'si geldi
+    _appLinks.uriLinkStream.listen((uri) async {
+      if (uri.toString().startsWith(StringConstant.supabaseRedirectUri) &&
+          mounted) {
         final authProvider = Provider.of<AuthProvider>(context, listen: false);
         final supabase = Supabase.instance.client;
 
-        await Future.delayed(const Duration(seconds: 1), () {});
+        // Add delay
+        await Future.delayed(
+          Duration(seconds: (DoubleConstant.two / 2).toInt()),
+          () {},
+        );
 
         // Check supabase session
         final session = supabase.auth.currentSession;
@@ -84,11 +90,16 @@ mixin SplashMixin on State<SplashView> {
     // Check the deep connection that comes with the application off
     final uri = await _appLinks.getInitialLink();
     if (uri != null &&
-        uri.toString().startsWith(StringConstant.supabaseRedirectUri)) {
+        uri.toString().startsWith(StringConstant.supabaseRedirectUri) &&
+        mounted) {
       final authProvider = Provider.of<AuthProvider>(context, listen: false);
       final supabase = Supabase.instance.client;
 
-      await Future.delayed(const Duration(seconds: 1), () {});
+      // Add delay
+      await Future.delayed(
+        Duration(seconds: (DoubleConstant.two / 2).toInt()),
+        () {},
+      );
 
       // Check supabase session
       final session = supabase.auth.currentSession;
