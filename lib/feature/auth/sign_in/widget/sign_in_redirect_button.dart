@@ -16,9 +16,7 @@ final class _SignInRedirectButton extends StatelessWidget {
               color: ColorConstant.onPrimary,
             ),
             children: [
-              const TextSpan(
-                text: StringConstant.dontHaveAccount,
-              ),
+              TextSpan(text: StringConstant.dontHaveAccount),
               TextSpan(
                 text: StringConstant.signUp,
                 style: context.general.textTheme.labelSmall?.copyWith(

@@ -15,7 +15,7 @@ final class _TermsText extends StatelessWidget {
             letterSpacing: DoubleConstant.termsLetterSpacing,
           ),
           children: [
-            const TextSpan(text: StringConstant.firstTermsText),
+            TextSpan(text: StringConstant.firstTermsText),
             TextSpan(
               text: StringConstant.secondTermsText,
               style: context.general.textTheme.labelSmall?.copyWith(

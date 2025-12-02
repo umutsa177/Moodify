@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:moodify/core/providers/auth/auth_provider.dart';
 import 'package:moodify/core/router/app_router.dart';
@@ -8,12 +9,19 @@ import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await EasyLocalization.ensureInitialized();
   await Future.microtask(AppStart.init);
 
   runApp(
-    ChangeNotifierProvider(
-      create: (context) => AuthProvider(),
-      child: const MyApp(),
+    EasyLocalization(
+      supportedLocales: const [Locale('en'), Locale('tr')],
+      path: 'assets/translations',
+      fallbackLocale: const Locale('en'),
+      startLocale: const Locale('en'),
+      child: ChangeNotifierProvider(
+        create: (context) => AuthProvider(),
+        child: const MyApp(),
+      ),
     ),
   );
 }
@@ -29,6 +37,9 @@ class MyApp extends StatelessWidget {
       theme: AppTheme(context).theme,
       onGenerateRoute: AppRouter.routes,
       initialRoute: AppRouter.splash,
+      localizationsDelegates: context.localizationDelegates,
+      supportedLocales: context.supportedLocales,
+      locale: context.locale,
     );
   }
 }

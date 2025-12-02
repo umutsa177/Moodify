@@ -16,7 +16,7 @@ final class _ResendEmailButton extends StatelessWidget {
             fontWeight: FontWeight.w400,
           ),
           children: [
-            const TextSpan(
+            TextSpan(
               text: StringConstant.resendEmailFirstText,
             ),
             TextSpan(

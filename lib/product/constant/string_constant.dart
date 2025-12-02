@@ -1,133 +1,130 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 @immutable
 final class StringConstant {
   const StringConstant._();
 
-  static const String appName = 'Moodify';
+  // AppName
+  static String get appName => 'appName'.tr();
 
   // nav bar
-  static const String feed = 'Feed';
-  static const String profile = 'Profile';
+  static String get feed => 'feed'.tr();
+  static String get profile => 'profile'.tr();
 
   // Splash Screen
-  static const String splashTitle = 'Find Your Vibe';
-  static const String splashSubtitle =
-      'Log in to discover videos that match\nyour mood';
+  static String get splashTitle => 'splashTitle'.tr();
+  static String get splashSubtitle => 'splashSubtitle'.tr();
 
-  static const String signInGoogle = 'Continue with Google';
-  static const String signInFacebook = 'Continue with Social';
-  static const String emailSignup = 'Sign up with Email';
-  static const String firstTermsText = 'By continuing, you agree to our ';
-  static const String secondTermsText = 'Terms of Service';
-  static const String seperateText = 'or';
+  static String get signInGoogle => 'signInGoogle'.tr();
+  static String get signInFacebook => 'signInFacebook'.tr();
+  static String get emailSignup => 'emailSignup'.tr();
+  static String get firstTermsText => 'firstTermsText'.tr();
+  static String get secondTermsText => 'secondTermsText'.tr();
+  static String get seperateText => 'seperateText'.tr();
 
   // Register Screen
-  static const String registerTitle = 'Create your account';
+  static String get registerTitle => 'registerTitle'.tr();
 
   // Sign Up
-  static const String email = 'Email';
-  static const String password = 'Password';
-  static const String confirmPassword = 'Confirm Password';
-  static const String alreadyHaveAccount = 'Already have an account?';
-  static const String signUp = 'Sign Up';
-  static const String signUpSuccess = 'Account created successfully';
+  static String get email => 'email'.tr();
+  static String get password => 'password'.tr();
+  static String get confirmPassword => 'confirmPassword'.tr();
+  static String get alreadyHaveAccount => 'alreadyHaveAccount'.tr();
+  static String get signUp => 'signUp'.tr();
+  static String get signUpSuccess => 'signUpSuccess'.tr();
 
   // Login
-  static const String login = 'Login';
-  static const String loginTitle = 'Log in to your account';
-  static const String forgotPassword = 'Forgot Password?';
-  static const String dontHaveAccount = "Don't have an account?";
+  static String get login => 'login'.tr();
+  static String get loginTitle => 'loginTitle'.tr();
+  static String get forgotPassword => 'forgotPassword'.tr();
+  static String get dontHaveAccount => 'dontHaveAccount'.tr();
 
   // Verification
-  static const String backToSignUp = 'Back to Sign Up';
-  static const String resendEmailFirstText = "Didn't receive the email?";
-  static const String resendEmailSecondText = 'Resend';
-  static const String checkMail = 'Check your email';
-  static const String sendLink = "We've sent a verification link to:";
-  static const String checkInboxAndContinue =
-      'Please check your inbox and click the link to continue';
+  static String get backToSignUp => 'backToSignUp'.tr();
+  static String get resendEmailFirstText => 'resendEmailFirstText'.tr();
+  static String get resendEmailSecondText => 'resendEmailSecondText'.tr();
+  static String get checkMail => 'checkMail'.tr();
+  static String get sendLink => 'sendLink'.tr();
+  static String get checkInboxAndContinue => 'checkInboxAndContinue'.tr();
 
   // Mood Selection
-  static const String moodSelectionTitle = 'How are you feeling today?';
-  static const String moodSelectionFirstDescriptionText =
-      'Select a mood to get video';
-  static const String moodSelectionSecondDescriptionText =
-      'recommendations tailored just for you';
+  static String get moodSelectionTitle => 'moodSelectionTitle'.tr();
+  static String get moodSelectionFirstDescriptionText =>
+      'moodSelectionFirstDescriptionText'.tr();
+  static String get moodSelectionSecondDescriptionText =>
+      'moodSelectionSecondDescriptionText'.tr();
 
   // Feed
-  static const String videosNotFound = 'No videos found or connection error';
-  static const String notPlayable = 'Video do not playable';
-  static const String notLoaded = 'Video failed to load';
-  static const String pullToRefresh = 'Pull down to refresh';
-  static const String removeVideoSuccess = 'Video removed from saved';
-  static const String videoSaved = 'Video saved!';
+  static String get videosNotFound => 'videosNotFound'.tr();
+  static String get notPlayable => 'notPlayable'.tr();
+  static String get notLoaded => 'notLoaded'.tr();
+  static String get pullToRefresh => 'pullToRefresh'.tr();
+  static String get removeVideoSuccess => 'removeVideoSuccess'.tr();
+  static String get videoSaved => 'videoSaved'.tr();
 
   // Profile
-  static const String myProfile = 'My Profile';
-  static const String savedVideos = 'Your Saved Videos';
-  static const String savedVideosEmpty = 'No saved videos yet';
-  static const String savedVideoSearchEmpty = 'No videos found for';
-  static const String searchSavedVideo = 'Search saved videos';
-  static const String noVideos = 'No videos found';
-  static const String logoutAccount = 'Are you sure you want to log out?';
+  static String get myProfile => 'myProfile'.tr();
+  static String get savedVideos => 'savedVideos'.tr();
+  static String get savedVideosEmpty => 'savedVideosEmpty'.tr();
+  static String get savedVideoSearchEmpty => 'savedVideoSearchEmpty'.tr();
+  static String get searchSavedVideo => 'searchSavedVideo'.tr();
+  static String get noVideos => 'noVideos'.tr();
+  static String get logoutAccount => 'logoutAccount'.tr();
 
   // Edit Profile
-  static const String editProfile = 'Edit Profile';
-  static const String chooseImageSource = 'Choose Image Source';
-  static const String gallery = 'Gallery';
-  static const String camera = 'Camera';
-  static const String notEmail = 'Email not found';
-  static const String username = 'Username';
-  static const String nameHint = 'Enter your username';
-  static const String deleteAvatar = 'Delete Profile Photo';
-  static const String deletedAvatar = 'Profile photo deleted';
-  static const String deleteAvatarError = 'Error while deleting profile photo';
-  static const String nameCannotBeEmpty = 'Username cannot be empty';
-  static const String uploadAvatarError = 'Avatar upload failed';
-  static const String updateProfileError = 'Profile update failed';
-  static const String updateProfileSuccess = 'Profile updated successfully';
-  static const String deleteYourAvatar =
-      'Are you sure you want to delete your profile photo?';
+  static String get editProfile => 'editProfile'.tr();
+  static String get chooseImageSource => 'chooseImageSource'.tr();
+  static String get gallery => 'gallery'.tr();
+  static String get camera => 'camera'.tr();
+  static String get notEmail => 'notEmail'.tr();
+  static String get username => 'username'.tr();
+  static String get nameHint => 'nameHint'.tr();
+  static String get deleteAvatar => 'deleteAvatar'.tr();
+  static String get deletedAvatar => 'deletedAvatar'.tr();
+  static String get deleteAvatarError => 'deleteAvatarError'.tr();
+  static String get nameCannotBeEmpty => 'nameCannotBeEmpty'.tr();
+  static String get uploadAvatarError => 'uploadAvatarError'.tr();
+  static String get updateProfileError => 'updateProfileError'.tr();
+  static String get updateProfileSuccess => 'updateProfileSuccess'.tr();
+  static String get deleteYourAvatar => 'deleteYourAvatar'.tr();
 
   // Settings
-  static const String selectionLanguage = 'Language Selection';
-  static const String eng = 'English';
-  static const String tur = 'Turkish';
-  static const String changePassword = 'Change Password';
-  static const String currentPassword = 'Current Password';
-  static const String newPassword = 'New Password';
-  static const String updatePassword = 'Update your password';
-  static const String deleteAccount = 'Delete Account';
-  static const String deleteAccountSubtitle = 'Permanently delete your account';
-  static const String fillAllFields = 'Fill in all fields';
-  static const String passwordsNotMatch = 'Passwords do not match';
-  static const String passwordMustBeSixCharacters =
-      'Password must be at least 6 characters';
-  static const String passwordChanged = 'Password changed successfully';
-  static const String passwordChangeFailed = 'Password change failed';
-  static const String deleteYourAccount =
-      'Are you sure you want to delete your account?';
-  static const String deleteYourAccountSubtitle =
-      'This action cannot be undone and the following will be deleted:';
-  static const String deleteYourAccountDatas =
-      '• Your profile information\n• Your saved videos\n• All datas';
-  static const String accountDeleted = 'Your account has been deleted';
-  static const String accountDeleteFailed = 'Account deletion failed';
+  static String get selectionLanguage => 'selectionLanguage'.tr();
+  static String get eng => 'eng'.tr();
+  static String get tur => 'tur'.tr();
+  static String get changePassword => 'changePassword'.tr();
+  static String get currentPassword => 'currentPassword'.tr();
+  static String get newPassword => 'newPassword'.tr();
+  static String get updatePassword => 'updatePassword'.tr();
+  static String get deleteAccount => 'deleteAccount'.tr();
+  static String get deleteAccountSubtitle => 'deleteAccountSubtitle'.tr();
+  static String get fillAllFields => 'fillAllFields'.tr();
+  static String get passwordsNotMatch => 'passwordsNotMatch'.tr();
+  static String get passwordMustBeSixCharacters =>
+      'passwordMustBeSixCharacters'.tr();
+  static String get passwordChanged => 'passwordChanged'.tr();
+  static String get passwordChangeFailed => 'passwordChangeFailed'.tr();
+  static String get deleteYourAccount => 'deleteYourAccount'.tr();
+  static String get deleteYourAccountSubtitle =>
+      'deleteYourAccountSubtitle'.tr();
+  static String get deleteYourAccountDatas => 'deleteYourAccountDatas'.tr();
+  static String get accountDeleted => 'accountDeleted'.tr();
+  static String get accountDeleteFailed => 'accountDeleteFailed'.tr();
 
   // Other
-  static const String okey = 'OK';
-  static const String loading = 'Loading...';
-  static const String tryAgain = 'Try Again';
-  static const String cancel = 'Cancel';
-  static const String save = 'Save';
-  static const String delete = 'Delete';
-  static const String change = 'Change';
+  static String get okey => 'okey'.tr();
+  static String get loading => 'loading'.tr();
+  static String get tryAgain => 'tryAgain'.tr();
+  static String get cancel => 'cancel'.tr();
+  static String get save => 'save'.tr();
+  static String get delete => 'delete'.tr();
+  static String get change => 'change'.tr();
 
   // Tooltips
-  static const String remove = 'Remove';
-  static const String signOut = 'Sign out';
-  static const String settings = 'Settings';
+  static String get remove => 'remove'.tr();
+  static String get signOut => 'signOut'.tr();
+  static String get settings => 'settings'.tr();
 
   // supabase
   static const String supabaseRedirectUri =

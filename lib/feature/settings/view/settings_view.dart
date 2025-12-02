@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_ce/hive.dart';
@@ -22,6 +23,12 @@ class SettingsView extends StatelessWidget {
   Widget build(BuildContext context) {
     final authProvider = context.watch<AuthProvider>();
     final isEmailUser = authProvider.isEmailProvider();
+
+    // Mevcut dili al
+    final currentLocale = context.locale;
+    final currentLanguage = currentLocale.languageCode == 'tr'
+        ? StringConstant.tur
+        : StringConstant.eng;
 
     return Scaffold(
       body: DecoratedBox(
@@ -54,7 +61,7 @@ class SettingsView extends StatelessWidget {
                       _SettingsTile(
                         icon: Icons.language,
                         title: StringConstant.selectionLanguage,
-                        subtitle: StringConstant.eng,
+                        subtitle: currentLanguage,
                         onTap: () => changeLanguageDialog(context),
                       ),
 
@@ -132,54 +139,55 @@ class SettingsView extends StatelessWidget {
 
   // Change Language Dialog
   Future<void> changeLanguageDialog(BuildContext context) async {
+    final currentLocale = context.locale;
+
     await showDialog<void>(
       context: context,
-      builder: (context) => AlertDialog(
+      builder: (dialogContext) => AlertDialog(
         backgroundColor: ColorConstant.onSecondary,
         shape: RoundedRectangleBorder(
-          borderRadius: context.border.normalBorderRadius,
+          borderRadius: dialogContext.border.normalBorderRadius,
         ),
         title: Text(
           StringConstant.selectionLanguage,
-          style: context.general.textTheme.titleLarge?.copyWith(
+          style: dialogContext.general.textTheme.titleLarge?.copyWith(
             color: ColorConstant.primary,
             fontWeight: FontWeight.bold,
           ),
         ),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            RadioListTile<String>(
-              title: Text(
-                StringConstant.tur,
-                style: context.general.textTheme.bodyLarge?.copyWith(
-                  color: ColorConstant.primary,
+        content: RadioGroup<String>(
+          groupValue: currentLocale.languageCode,
+          onChanged: (value) async {
+            if (value != null) {
+              await context.setLocale(Locale(value));
+              if (dialogContext.mounted) await dialogContext.route.pop();
+            }
+          },
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              RadioListTile<String>(
+                title: Text(
+                  StringConstant.tur,
+                  style: dialogContext.general.textTheme.bodyLarge?.copyWith(
+                    color: ColorConstant.primary,
+                  ),
                 ),
+                value: 'tr',
+                activeColor: ColorConstant.primary,
               ),
-              value: 'tr',
-              groupValue: 'tr',
-              activeColor: ColorConstant.primary,
-              onChanged: (value) async {
-                await context.route.pop();
-                // TODO: Implement language change
-              },
-            ),
-            RadioListTile<String>(
-              title: Text(
-                StringConstant.eng,
-                style: context.general.textTheme.bodyLarge?.copyWith(
-                  color: ColorConstant.primary,
+              RadioListTile<String>(
+                title: Text(
+                  StringConstant.eng,
+                  style: dialogContext.general.textTheme.bodyLarge?.copyWith(
+                    color: ColorConstant.primary,
+                  ),
                 ),
+                value: 'en',
+                activeColor: ColorConstant.primary,
               ),
-              value: 'en',
-              groupValue: 'en',
-              activeColor: ColorConstant.primary,
-              onChanged: (value) async {
-                await context.route.pop();
-                // TODO: Implement language change
-              },
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

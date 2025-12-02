@@ -27,6 +27,9 @@ dependencies:
   kartal: ^4.2.0
   webview_flutter: ^4.13.0
 
+  # Localization
+  easy_localization: ^3.0.7
+
   # Icon
   flutter_svg: ^2.2.3
 
@@ -67,6 +70,7 @@ flutter:
 
   assets:
     - assets/icons/
+    - assets/translations/
 
   fonts:
     - family: Epilogue
