@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:moodify/core/providers/auth/auth_provider.dart';
+import 'package:moodify/core/providers/profile/purchase_provider.dart';
 import 'package:moodify/core/router/app_router.dart';
 import 'package:moodify/product/constant/string_constant.dart';
 import 'package:moodify/product/initialize/app_start.dart';
@@ -18,8 +21,17 @@ void main() async {
       path: 'assets/translations',
       fallbackLocale: const Locale('en'),
       startLocale: const Locale('en'),
-      child: ChangeNotifierProvider(
-        create: (context) => AuthProvider(),
+      child: MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (_) => AuthProvider()),
+          ChangeNotifierProvider(
+            create: (context) {
+              final provider = PurchaseProvider();
+              unawaited(provider.initialize());
+              return provider;
+            },
+          ),
+        ],
         child: const MyApp(),
       ),
     ),

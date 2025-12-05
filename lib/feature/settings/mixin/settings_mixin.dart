@@ -7,14 +7,139 @@ import 'package:hive_ce/hive.dart';
 import 'package:kartal/kartal.dart';
 import 'package:moodify/core/model/saved_video.dart';
 import 'package:moodify/core/providers/auth/auth_provider.dart';
+import 'package:moodify/core/providers/profile/purchase_provider.dart';
 import 'package:moodify/core/router/app_router.dart';
 import 'package:moodify/feature/settings/view/settings_view.dart';
 import 'package:moodify/product/constant/color_constant.dart';
+import 'package:moodify/product/constant/double_constant.dart';
 import 'package:moodify/product/constant/string_constant.dart';
+import 'package:moodify/product/extension/loading_extension.dart';
 import 'package:moodify/product/extension/toast_extension.dart';
 import 'package:provider/provider.dart';
+import 'package:purchases_flutter/purchases_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 mixin SettingsMixin on State<SettingsView> {
+  // Manage Premium Dialog (For Premium Users)
+  Future<void> showManagePremiumDialog(BuildContext context) async {
+    await showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (dialogContext) => AlertDialog(
+        backgroundColor: ColorConstant.onSecondary,
+        shape: RoundedRectangleBorder(
+          borderRadius: dialogContext.border.normalBorderRadius,
+        ),
+        title: Row(
+          spacing: dialogContext.sized.lowValue,
+          children: [
+            const Icon(
+              Icons.verified,
+              color: ColorConstant.success,
+            ),
+            Text(
+              StringConstant.premiumMember,
+              style: dialogContext.general.textTheme.titleLarge?.copyWith(
+                color: ColorConstant.primary,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          spacing: dialogContext.sized.normalValue,
+          children: [
+            Text(
+              StringConstant.premiumActive,
+              style: dialogContext.general.textTheme.bodyLarge?.copyWith(
+                color: ColorConstant.success,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            Text(
+              StringConstant.managePremiumInfo,
+              style: dialogContext.general.textTheme.bodyMedium?.copyWith(
+                color: ColorConstant.primary,
+              ),
+            ),
+            // Manage Subscription Button
+            ElevatedButton.icon(
+              onPressed: () => _openManageSubscription(context),
+              icon: const Icon(Icons.settings),
+              label: Text(
+                StringConstant.manageSubscription,
+                style: dialogContext.general.textTheme.bodyLarge?.copyWith(
+                  color: ColorConstant.onSecondary,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: ColorConstant.primary,
+                foregroundColor: ColorConstant.onSecondary,
+                shape: RoundedRectangleBorder(
+                  borderRadius: dialogContext.border.lowBorderRadius,
+                ),
+              ),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => dialogContext.route.pop(),
+            child: Text(
+              StringConstant.close,
+              style: dialogContext.general.textTheme.bodyLarge?.copyWith(
+                color: ColorConstant.videoDurationColor,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // Open platform-specific subscription management
+  Future<void> _openManageSubscription(BuildContext context) async {
+    try {
+      final customerInfo = await Purchases.getCustomerInfo();
+      final managementUrl = customerInfo.managementURL;
+
+      if (managementUrl != null) {
+        final uri = Uri.parse(managementUrl);
+        if (await canLaunchUrl(uri)) {
+          await launchUrl(uri, mode: LaunchMode.externalApplication);
+        } else {
+          if (context.mounted) {
+            await ToastExtension.showToast(
+              message: StringConstant.cannotOpenSubscriptionManagement,
+              backgroundColor: ColorConstant.error,
+              context: context,
+            );
+          }
+        }
+      } else {
+        if (context.mounted) {
+          await ToastExtension.showToast(
+            message: StringConstant.noManagementUrlAvailable,
+            backgroundColor: ColorConstant.error,
+            context: context,
+          );
+        }
+      }
+    } on Exception catch (e) {
+      if (kDebugMode) log('Error opening subscription management: $e');
+      if (context.mounted) {
+        await ToastExtension.showToast(
+          message: StringConstant.errorOccurred,
+          backgroundColor: ColorConstant.error,
+          context: context,
+        );
+      }
+    }
+  }
+
   // Change Language Dialog
   Future<void> changeLanguageDialog(BuildContext context) async {
     final currentLocale = context.locale;
@@ -391,5 +516,181 @@ mixin SettingsMixin on State<SettingsView> {
         );
       }
     }
+  }
+
+  // Premium Dialog (For upgrade to premium)
+  Future<void> showPremiumDialog(BuildContext context) async {
+    final purchaseProvider = context.read<PurchaseProvider>();
+
+    await showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (dialogContext) => AlertDialog(
+        backgroundColor: ColorConstant.onSecondary,
+        shape: RoundedRectangleBorder(
+          borderRadius: dialogContext.border.normalBorderRadius,
+        ),
+        title: Row(
+          spacing: context.sized.normalValue,
+          children: [
+            const Icon(
+              Icons.workspace_premium,
+              color: ColorConstant.primary,
+            ),
+            Expanded(
+              child: Text(
+                StringConstant.upgradeToPremium,
+                style: dialogContext.general.textTheme.titleLarge?.copyWith(
+                  color: ColorConstant.primary,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ],
+        ),
+        content: SingleChildScrollView(
+          physics: const ClampingScrollPhysics(),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                StringConstant.premiumFeatures,
+                style: dialogContext.general.textTheme.bodyLarge?.copyWith(
+                  color: ColorConstant.primary,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              dialogContext.sized.emptySizedHeightBoxLow,
+              _featureItem(dialogContext, StringConstant.feature1),
+              _featureItem(dialogContext, StringConstant.feature2),
+              _featureItem(dialogContext, StringConstant.feature3),
+              dialogContext.sized.emptySizedHeightBoxLow,
+
+              if (purchaseProvider.isLoading)
+                LoadingExtension.loadingBar(context)
+              else
+                ...purchaseProvider.availablePackages.map(
+                  (package) => _packageCard(dialogContext, package),
+                ),
+            ],
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => dialogContext.route.pop(),
+            child: Text(
+              StringConstant.cancel,
+              style: dialogContext.general.textTheme.bodyLarge?.copyWith(
+                color: ColorConstant.videoDurationColor,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Padding _featureItem(BuildContext context, String feature) {
+    return Padding(
+      padding: context.padding.verticalLow,
+      child: Row(
+        spacing: context.sized.lowValue,
+        children: [
+          const Icon(
+            Icons.check_circle,
+            color: ColorConstant.success,
+            size: DoubleConstant.twenty,
+          ),
+          Expanded(
+            child: Text(
+              feature,
+              style: context.general.textTheme.bodyMedium?.copyWith(
+                color: ColorConstant.primary,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Card _packageCard(BuildContext context, Package package) {
+    return Card(
+      color: ColorConstant.onPrimaryLight,
+      margin: context.padding.onlyBottomLow,
+      child: InkWell(
+        onTap: () async {
+          final success = await context
+              .read<PurchaseProvider>()
+              .purchasePackage(package);
+
+          if (!context.mounted) return;
+
+          if (success) {
+            await context.route.pop();
+            if (context.mounted) {
+              await ToastExtension.showToast(
+                message: StringConstant.purchaseSuccess,
+                backgroundColor: ColorConstant.success,
+                context: context,
+              );
+            }
+          } else {
+            await ToastExtension.showToast(
+              message: StringConstant.purchaseFailed,
+              backgroundColor: ColorConstant.error,
+              context: context,
+            );
+          }
+        },
+        child: Padding(
+          padding: context.padding.normal,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            spacing: context.sized.lowValue,
+            children: [
+              Text(
+                package.storeProduct.title,
+                style: context.general.textTheme.titleMedium?.copyWith(
+                  color: ColorConstant.primary,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Text(
+                package.storeProduct.description,
+                style: context.general.textTheme.bodySmall?.copyWith(
+                  color: ColorConstant.videoCloseColor,
+                ),
+              ),
+              Text(
+                package.storeProduct.priceString,
+                style: context.general.textTheme.headlineSmall?.copyWith(
+                  color: ColorConstant.primary,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  // Restore Purchases
+  Future<void> restorePurchasesAction(BuildContext context) async {
+    await context.read<PurchaseProvider>().restorePurchases();
+
+    if (!context.mounted) return;
+
+    final isPremium = context.read<PurchaseProvider>().isPremium;
+
+    await ToastExtension.showToast(
+      message: isPremium
+          ? StringConstant.purchasesRestored
+          : StringConstant.noPurchasesFound,
+      backgroundColor: isPremium ? ColorConstant.success : ColorConstant.error,
+      context: context,
+    );
   }
 }

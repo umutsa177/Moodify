@@ -126,6 +126,29 @@ final class StringConstant {
   static String get signOut => 'signOut'.tr();
   static String get settings => 'settings'.tr();
 
+  // Purchase
+  static String get upgradeToPremium => 'upgradeToPremium'.tr();
+  static String get premiumMember => 'premiumMember'.tr();
+  static String get premiumActive => 'premiumActive'.tr();
+  static String get unlockAllFeatures => 'unlockAllFeatures'.tr();
+  static String get premiumFeatures => 'premiumFeatures'.tr();
+  static String get feature1 => 'feature1'.tr();
+  static String get feature2 => 'feature2'.tr();
+  static String get feature3 => 'feature3'.tr();
+  static String get purchaseSuccess => 'purchaseSuccess'.tr();
+  static String get purchaseFailed => 'purchaseFailed'.tr();
+  static String get restorePurchases => 'restorePurchases'.tr();
+  static String get restorePurchasesSubtitle => 'restorePurchasesSubtitle'.tr();
+  static String get purchasesRestored => 'purchasesRestored'.tr();
+  static String get noPurchasesFound => 'noPurchasesFound'.tr();
+  static String get managePremiumInfo => 'managePremiumInfo'.tr();
+  static String get manageSubscription => 'manageSubscription'.tr();
+  static String get close => 'close'.tr();
+  static String get cannotOpenSubscriptionManagement =>
+      'cannotOpenSubscriptionManagement'.tr();
+  static String get noManagementUrlAvailable => 'noManagementUrlAvailable'.tr();
+  static String get errorOccurred => 'errorOccurred'.tr();
+
   // supabase
   static const String supabaseRedirectUri =
       'com.umutsayar.moodify://oauth2redirect';

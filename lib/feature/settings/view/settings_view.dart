@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:kartal/kartal.dart';
 import 'package:moodify/core/providers/auth/auth_provider.dart';
+import 'package:moodify/core/providers/profile/purchase_provider.dart';
 import 'package:moodify/feature/settings/mixin/settings_mixin.dart';
 import 'package:moodify/product/constant/color_constant.dart';
 import 'package:moodify/product/constant/double_constant.dart';
@@ -21,9 +22,11 @@ class _SettingsViewState extends State<SettingsView> with SettingsMixin {
   @override
   Widget build(BuildContext context) {
     final authProvider = context.watch<AuthProvider>();
+    final purchaseProvider = context.watch<PurchaseProvider>();
     final isEmailUser = authProvider.isEmailProvider();
+    final isPremium = purchaseProvider.isPremium;
 
-    // Mevcut dili al
+    // Get current language
     final currentLocale = context.locale;
     final currentLanguage = currentLocale.languageCode == 'tr'
         ? StringConstant.tur
@@ -56,6 +59,30 @@ class _SettingsViewState extends State<SettingsView> with SettingsMixin {
                     physics: const ClampingScrollPhysics(),
                     padding: context.padding.normal,
                     children: [
+                      // Premium Status
+                      _SettingsTile(
+                        icon: isPremium
+                            ? Icons.verified
+                            : Icons.workspace_premium,
+                        title: isPremium
+                            ? StringConstant.premiumMember
+                            : StringConstant.upgradeToPremium,
+                        subtitle: isPremium
+                            ? StringConstant.premiumActive
+                            : StringConstant.unlockAllFeatures,
+                        onTap: isPremium
+                            ? () => showManagePremiumDialog(context)
+                            : () => showPremiumDialog(context),
+                      ),
+                      _settingsDivider(),
+                      // Restore Purchases
+                      _SettingsTile(
+                        icon: Icons.restore,
+                        title: StringConstant.restorePurchases,
+                        subtitle: StringConstant.restorePurchasesSubtitle,
+                        onTap: () => restorePurchasesAction(context),
+                      ),
+                      _settingsDivider(),
                       // Language Selection
                       _SettingsTile(
                         icon: Icons.language,
@@ -63,7 +90,6 @@ class _SettingsViewState extends State<SettingsView> with SettingsMixin {
                         subtitle: currentLanguage,
                         onTap: () => changeLanguageDialog(context),
                       ),
-
                       if (isEmailUser) ...[
                         _settingsDivider(),
                         // Change Password

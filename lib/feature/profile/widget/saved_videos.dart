@@ -25,7 +25,12 @@ class _SavedVideosState extends State<SavedVideos> with SavedVideosMixin {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                _savedVideosText(context),
+                Expanded(
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: _savedVideosText(context),
+                  ),
+                ),
                 _videosViewSelectionWidget(context),
               ],
             ),
