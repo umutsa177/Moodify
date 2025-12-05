@@ -29,7 +29,6 @@ final class AppStart {
     try {
       final res = await _dio.get<dynamic>(endpoint);
 
-      // Dio bazen already-decoded (Map) bazen String döndürebilir
       final data = switch (res.data) {
         final Map<String, dynamic> m => m,
         final String s => jsonDecode(s) as Map<String, dynamic>,
@@ -41,7 +40,6 @@ final class AppStart {
       vimeoBaseUrl = (data['VIMEO_BASE_URL'] ?? '').toString();
       vimeoAccessToken = (data['VIMEO_ACCESS_TOKEN'] ?? '').toString();
     } on Exception catch (_) {
-      // Hata durumunda boş string'lerle devam eder
       supabaseUrl = '';
       supabaseAnonKey = '';
       vimeoBaseUrl = '';
