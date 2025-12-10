@@ -31,6 +31,12 @@ class FeedProvider with ChangeNotifier {
   );
   late Box<String> _cacheBox;
 
+  @visibleForTesting
+  void setStateForTest(FeedState newState) {
+    _state = newState;
+    notifyListeners();
+  }
+
   Future<void> _init() async {
     // Open cache box (String type for JSON storage)
     if (!Hive.isBoxOpen(_cacheBoxName)) {

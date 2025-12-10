@@ -55,6 +55,12 @@ class MockFeedProvider extends _i1.Mock implements _i3.FeedProvider {
           as bool);
 
   @override
+  void setStateForTest(_i2.FeedState? newState) => super.noSuchMethod(
+    Invocation.method(#setStateForTest, [newState]),
+    returnValueForMissingStub: null,
+  );
+
+  @override
   _i4.Future<void> loadMoreVideos() =>
       (super.noSuchMethod(
             Invocation.method(#loadMoreVideos, []),
