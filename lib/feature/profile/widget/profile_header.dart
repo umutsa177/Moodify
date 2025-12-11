@@ -6,6 +6,7 @@ final class _ProfileHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final authProvider = context.watch<AuthProvider>();
+    final savedVideosProvider = context.watch<SavedVideosProvider>();
     final user = authProvider.currentUser;
     final profile = authProvider.userProfile;
     final isEmailProvider = authProvider.isEmailProvider();
@@ -15,7 +16,10 @@ final class _ProfileHeader extends StatelessWidget {
       child: Column(
         spacing: context.sized.lowValue,
         children: [
-          _HeaderButtons(authProvider: authProvider),
+          _HeaderButtons(
+            authProvider: authProvider,
+            savedVideosProvider: savedVideosProvider,
+          ),
           // Profile Picture
           Stack(
             children: [
@@ -111,9 +115,11 @@ final class _EmailProfilePicture extends StatelessWidget {
 final class _HeaderButtons extends StatelessWidget {
   const _HeaderButtons({
     required this.authProvider,
+    required this.savedVideosProvider,
   });
 
   final AuthProvider authProvider;
+  final SavedVideosProvider savedVideosProvider;
 
   @override
   Widget build(BuildContext context) {
@@ -155,6 +161,7 @@ final class _HeaderButtons extends StatelessWidget {
                   onPressed: () => ProfileMixin.showLogoutDialog(
                     context,
                     authProvider,
+                    savedVideosProvider,
                   ),
                 ),
               ),

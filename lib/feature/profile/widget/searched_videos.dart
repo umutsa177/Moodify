@@ -44,7 +44,7 @@ final class _SearchedVideos extends StatelessWidget {
             )
           : viewType == VideoViewType.list
           ? ListView.separated(
-              physics: const FixedExtentScrollPhysics(),
+              physics: const BouncingScrollPhysics(),
               padding:
                   context.padding.horizontalNormal +
                   context.padding.verticalLow,
@@ -56,7 +56,7 @@ final class _SearchedVideos extends StatelessWidget {
               },
             )
           : GridView.builder(
-              physics: const FixedExtentScrollPhysics(),
+              physics: const BouncingScrollPhysics(),
               padding:
                   context.padding.horizontalNormal +
                   context.padding.verticalLow,

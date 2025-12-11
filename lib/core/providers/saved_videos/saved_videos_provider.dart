@@ -11,7 +11,7 @@ class SavedVideosProvider with ChangeNotifier {
     unawaited(_init());
   }
 
-  final Box<SavedVideo> _box = Hive.box<SavedVideo>('saved_videos');
+  late Box<SavedVideo> _box;
   final SupabaseClient _supabase = Supabase.instance.client;
 
   List<SavedVideo> _savedVideos = [];
@@ -24,10 +24,22 @@ class SavedVideosProvider with ChangeNotifier {
   bool get isSyncing => _isSyncing;
 
   Future<void> _init() async {
+    final user = _supabase.auth.currentUser;
+    if (user == null) {
+      _savedVideos = [];
+      _isLoading = false;
+      notifyListeners();
+      return;
+    }
+
     _isLoading = true;
     notifyListeners();
 
-    // Load from cache
+    // ✅ Kullanıcıya özel Hive kutusunu aç
+    final boxName = 'saved_videos_${user.id}';
+    _box = await Hive.openBox<SavedVideo>(boxName);
+
+    // Load from cache (now user-specific)
     _savedVideos = _box.values.toList()
       ..sort((a, b) => b.savedAt.compareTo(a.savedAt));
 
@@ -54,18 +66,16 @@ class SavedVideosProvider with ChangeNotifier {
       ..sort((a, b) => b.savedAt.compareTo(a.savedAt));
     notifyListeners();
 
-    // Background cloud sync (non-blocking)
+    // Background cloud sync
     await _syncVideoToCloud(video);
   }
 
   // Remove video
   Future<void> removeVideo(String videoId) async {
-    // Immediate local delete
     await _box.delete(videoId);
     _savedVideos.removeWhere((v) => v.videoId == videoId);
     notifyListeners();
 
-    // Background cloud delete (non-blocking)
     await _removeVideoFromCloud(videoId);
   }
 
@@ -89,7 +99,6 @@ class SavedVideosProvider with ChangeNotifier {
     }
   }
 
-  /// Remove video from Supabase (called in background)
   Future<void> _removeVideoFromCloud(String videoId) async {
     try {
       final user = _supabase.auth.currentUser;
@@ -120,7 +129,6 @@ class SavedVideosProvider with ChangeNotifier {
         return;
       }
 
-      // Fetch all videos from Supabase
       final response = await _supabase
           .from('saved_videos')
           .select()
@@ -134,14 +142,14 @@ class SavedVideosProvider with ChangeNotifier {
       final localVideoIds = _box.keys.toSet();
       final cloudVideoIds = cloudVideos.map((v) => v.videoId).toSet();
 
-      //  Add cloud videos that don't exist locally
+      // Add cloud videos missing locally
       for (final video in cloudVideos) {
         if (!localVideoIds.contains(video.videoId)) {
           await _box.put(video.videoId, video);
         }
       }
 
-      // Upload local videos that don't exist in cloud
+      // Upload local videos missing in cloud
       final videosToUpload = _box.values.where(
         (video) => !cloudVideoIds.contains(video.videoId),
       );
@@ -150,26 +158,23 @@ class SavedVideosProvider with ChangeNotifier {
         await _syncVideoToCloud(video);
       }
 
-      //  Update local list from Hive
+      // Refresh local list
       _savedVideos = _box.values.toList()
         ..sort((a, b) => b.savedAt.compareTo(a.savedAt));
     } on Exception catch (e) {
       if (kDebugMode) log('Sync failed: $e');
-      // Continue with local data
     } finally {
       _isSyncing = false;
       notifyListeners();
     }
   }
 
-  // Clear all saved videos (both local and cloud)
+  // Clear all saved videos for current user (both local and cloud)
   Future<void> clearAll() async {
-    // Clear local
     await _box.clear();
     _savedVideos.clear();
     notifyListeners();
 
-    // Clear cloud
     try {
       final user = _supabase.auth.currentUser;
       if (user != null) {
@@ -177,6 +182,19 @@ class SavedVideosProvider with ChangeNotifier {
       }
     } on Exception catch (e) {
       if (kDebugMode) log('Failed to clear cloud data: $e');
+    }
+  }
+
+  // Clear local data for current user
+  Future<void> clearLocalDataForCurrentUser() async {
+    final user = _supabase.auth.currentUser;
+    if (user == null) return;
+
+    final boxName = 'saved_videos_${user.id}';
+    if (Hive.isBoxOpen(boxName)) {
+      await Hive.box<SavedVideo>(boxName).clear();
+      await Hive.box<SavedVideo>(boxName).close();
+      await Hive.deleteBoxFromDisk(boxName);
     }
   }
 }

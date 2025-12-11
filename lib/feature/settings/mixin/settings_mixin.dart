@@ -3,11 +3,10 @@ import 'dart:developer';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:hive_ce/hive.dart';
 import 'package:kartal/kartal.dart';
-import 'package:moodify/core/model/saved_video.dart';
 import 'package:moodify/core/providers/auth/auth_provider.dart';
 import 'package:moodify/core/providers/profile/purchase_provider.dart';
+import 'package:moodify/core/providers/saved_videos/saved_videos_provider.dart';
 import 'package:moodify/core/router/app_router.dart';
 import 'package:moodify/feature/settings/view/settings_view.dart';
 import 'package:moodify/product/constant/color_constant.dart';
@@ -477,14 +476,9 @@ mixin SettingsMixin on State<SettingsView> {
   Future<void> _handleAccountDeletion(BuildContext context) async {
     // Clear cache
     try {
-      if (Hive.isBoxOpen('saved_videos_box')) {
-        final box = Hive.box<SavedVideo>('saved_videos_box');
-        await box.clear();
-      } else {
-        final box = await Hive.openBox<SavedVideo>('saved_videos_box');
-        await box.clear();
-        await box.close();
-      }
+      final savedVideosProvider = context.read<SavedVideosProvider>();
+      await savedVideosProvider.clearLocalDataForCurrentUser();
+
       if (kDebugMode) log('Cache cleared successfully');
     } on Exception catch (e) {
       if (kDebugMode) log('Cache could not be cleared: $e');

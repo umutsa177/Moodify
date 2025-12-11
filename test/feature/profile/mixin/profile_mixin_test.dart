@@ -8,13 +8,16 @@ import 'package:moodify/feature/profile/mixin/profile_mixin.dart';
 import 'package:moodify/product/constant/string_constant.dart';
 
 import 'profile_mixin_test.mocks.dart';
+import 'saved_videos_mixin_test.mocks.dart';
 
 @GenerateMocks([AuthProvider, Box])
 void main() {
   late MockAuthProvider mockAuthProvider;
+  late MockSavedVideosProvider mockSavedVideosProvider;
 
   setUp(() {
     mockAuthProvider = MockAuthProvider();
+    mockSavedVideosProvider = MockSavedVideosProvider();
   });
 
   Widget createTestWidget({required Widget child}) {
@@ -32,8 +35,11 @@ void main() {
           child: Builder(
             builder: (context) {
               return ElevatedButton(
-                onPressed: () =>
-                    ProfileMixin.showLogoutDialog(context, mockAuthProvider),
+                onPressed: () => ProfileMixin.showLogoutDialog(
+                  context,
+                  mockAuthProvider,
+                  mockSavedVideosProvider,
+                ),
                 child: const Text('Show Dialog'),
               );
             },
@@ -60,8 +66,11 @@ void main() {
           child: Builder(
             builder: (context) {
               return ElevatedButton(
-                onPressed: () =>
-                    ProfileMixin.showLogoutDialog(context, mockAuthProvider),
+                onPressed: () => ProfileMixin.showLogoutDialog(
+                  context,
+                  mockAuthProvider,
+                  mockSavedVideosProvider,
+                ),
                 child: const Text('Show Dialog'),
               );
             },
@@ -89,8 +98,11 @@ void main() {
           child: Builder(
             builder: (context) {
               return ElevatedButton(
-                onPressed: () =>
-                    ProfileMixin.showLogoutDialog(context, mockAuthProvider),
+                onPressed: () => ProfileMixin.showLogoutDialog(
+                  context,
+                  mockAuthProvider,
+                  mockSavedVideosProvider,
+                ),
                 child: const Text('Show Dialog'),
               );
             },
@@ -120,8 +132,11 @@ void main() {
           child: Builder(
             builder: (context) {
               return ElevatedButton(
-                onPressed: () =>
-                    ProfileMixin.showLogoutDialog(context, mockAuthProvider),
+                onPressed: () => ProfileMixin.showLogoutDialog(
+                  context,
+                  mockAuthProvider,
+                  mockSavedVideosProvider,
+                ),
                 child: const Text('Show Dialog'),
               );
             },
@@ -147,8 +162,11 @@ void main() {
           child: Builder(
             builder: (context) {
               return ElevatedButton(
-                onPressed: () =>
-                    ProfileMixin.showLogoutDialog(context, mockAuthProvider),
+                onPressed: () => ProfileMixin.showLogoutDialog(
+                  context,
+                  mockAuthProvider,
+                  mockSavedVideosProvider,
+                ),
                 child: const Text('Show Dialog'),
               );
             },
@@ -268,8 +286,11 @@ void main() {
           child: Builder(
             builder: (context) {
               return ElevatedButton(
-                onPressed: () =>
-                    ProfileMixin.showLogoutDialog(context, mockAuthProvider),
+                onPressed: () => ProfileMixin.showLogoutDialog(
+                  context,
+                  mockAuthProvider,
+                  mockSavedVideosProvider,
+                ),
                 child: const Text('Show Dialog'),
               );
             },
@@ -300,8 +321,11 @@ void main() {
           child: Builder(
             builder: (context) {
               return ElevatedButton(
-                onPressed: () =>
-                    ProfileMixin.showLogoutDialog(context, mockAuthProvider),
+                onPressed: () => ProfileMixin.showLogoutDialog(
+                  context,
+                  mockAuthProvider,
+                  mockSavedVideosProvider,
+                ),
                 child: const Text('Show Dialog'),
               );
             },
@@ -333,8 +357,11 @@ void main() {
           child: Builder(
             builder: (context) {
               return ElevatedButton(
-                onPressed: () =>
-                    ProfileMixin.showLogoutDialog(context, mockAuthProvider),
+                onPressed: () => ProfileMixin.showLogoutDialog(
+                  context,
+                  mockAuthProvider,
+                  mockSavedVideosProvider,
+                ),
                 child: const Text('Show Dialog'),
               );
             },

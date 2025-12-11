@@ -62,6 +62,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
+  # Mock
   mockito: ^5.6.1
 
   # Code Generator

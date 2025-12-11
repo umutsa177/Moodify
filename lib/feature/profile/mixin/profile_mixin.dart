@@ -1,20 +1,22 @@
 import 'dart:async';
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:hive_ce/hive.dart';
 import 'package:kartal/kartal.dart';
-import 'package:moodify/core/model/saved_video.dart';
 import 'package:moodify/core/providers/auth/auth_provider.dart';
+import 'package:moodify/core/providers/saved_videos/saved_videos_provider.dart';
 import 'package:moodify/core/router/app_router.dart';
 import 'package:moodify/product/constant/color_constant.dart';
 import 'package:moodify/product/constant/string_constant.dart';
+import 'package:path_provider/path_provider.dart';
 
 mixin ProfileMixin {
   static Future<void> showLogoutDialog(
     BuildContext context,
     AuthProvider authProvider,
+    SavedVideosProvider savedVideosProvider,
   ) async {
     final shouldLogout = await showDialog<bool>(
       context: context,
@@ -69,25 +71,13 @@ mixin ProfileMixin {
     );
 
     if (shouldLogout ?? false) {
-      // Clear saved videos cache
-      try {
-        if (Hive.isBoxOpen('saved_videos_box')) {
-          final box = Hive.box<SavedVideo>('saved_videos_box');
-          await box.clear();
-        } else {
-          final box = await Hive.openBox<SavedVideo>('saved_videos_box');
-          await box.clear();
-          await box.close();
-        }
-        if (kDebugMode) log('Cache cleared successfully');
-      } on Exception catch (e) {
-        if (kDebugMode) log('Cache could not be cleared: $e');
-      }
+      // Clear saved videos
+      await savedVideosProvider.clearLocalDataForCurrentUser();
 
       // Logout
       await authProvider.signOut();
 
-      // Redirect to splash view
+      // Redirect
       if (context.mounted) {
         unawaited(
           context.route.navigation.pushNamedAndRemoveUntil(
@@ -96,6 +86,21 @@ mixin ProfileMixin {
           ),
         );
       }
+    }
+  }
+
+  // Clear image cache
+  static Future<void> clearImageCache() async {
+    try {
+      final cacheDir = await getTemporaryDirectory();
+      final libCacheDir = Directory('${cacheDir.path}/libCachedImageData');
+
+      if (await libCacheDir.exists()) {
+        await libCacheDir.delete(recursive: true);
+        if (kDebugMode) log('Image cache cleared');
+      }
+    } on Exception catch (e) {
+      if (kDebugMode) log('Error clearing image cache: $e');
     }
   }
 }
