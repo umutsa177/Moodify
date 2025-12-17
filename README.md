@@ -370,7 +370,87 @@ flutter pub run flutter_launcher_icons
 
 ## 🎨 Ekran Görüntüleri
 
-> Ekran görüntüleri yakında eklenecek...
+<div align="center">
+🌟 Splash & Giriş Ekranları
+<table>
+  <tr>
+    <td align="center" width="33%">
+      <img src="https://github.com/user-attachments/assets/eed6c0d2-9cf7-4206-a4c9-cc5966a38b14" width="250"/>
+      <br />
+      <sub><b>Splash Screen</b></sub>
+      <br />
+      <sub>Google, Facebook ve Email ile giriş</sub>
+    </td>
+    <td align="center" width="33%">
+      <img src="https://github.com/user-attachments/assets/3058e3c4-dce0-42f6-8610-7767fe3fa67e" width="250"/>
+      <br />
+      <sub><b>Giriş Ekranı</b></sub>
+      <br />
+      <sub>Hızlı ve kolay giriş süreci</sub>
+    </td>
+    <td align="center" width="33%">
+      <img src="https://github.com/user-attachments/assets/b8211e23-f11a-458f-86a9-27d2b93edc8f" width="250"/>
+      <br />
+      <sub><b>Kayıt Ekranı</b></sub>
+      <br />
+      <sub>Hızlı ve kolay kayıt süreci</sub>
+    </td>
+  </tr>
+</table>
+🎭 Ana Özellikler
+<table>
+  <tr>
+    <td align="center" width="50%">
+      <img src="https://github.com/user-attachments/assets/1feba95d-2d3e-4a6a-9944-e1f47a413be5" width="250"/>
+      <br />
+      <sub><b>Ruh Hali Seçimi</b></sub>
+      <br />
+      <sub>Günlük ruh halinizi seçin</sub>
+    </td>
+    <td align="center" width="50%">
+      <img src="https://github.com/user-attachments/assets/0a23ef76-fb4b-4ea3-8b15-602312550513" width="250"/>
+      <br />
+      <sub><b>Video Feed</b></sub>
+      <br />
+      <sub>Kişiselleştirilmiş video önerileri</sub>
+    </td>
+  </tr>
+</table>
+👤 Profil & Ayarlar
+<table> 
+  <tr> 
+    <td align="center" width="33%"> 
+      <img src="https://github.com/user-attachments/assets/d98e07a6-95ee-403d-b033-59e00149268a" width="250"/> 
+      <br />
+      <sub><b>Profil Sayfası</b></sub>
+      <br /> 
+      <sub>Kaydedilen videolarınız ve fazlası</sub> </td> <td align="center" width="33%">
+        <img src="https://github.com/user-attachments/assets/ac33322e-eb9f-4817-bb55-5a49173ce8b2" width="250"/> 
+        <br />
+        <sub><b>Ayarlar</b></sub> 
+        <br /> 
+        <sub>Dil, premium ve hesap ayarları</sub>
+      </td> 
+    <td align="center" width="33%"> 
+      <img src="https://github.com/user-attachments/assets/0e6e406f-eb4b-4962-9ec1-ba0509404447" width="250"/>
+      <br /> 
+      <sub><b>Premium</b></sub>
+      <br />
+      <sub>Uygulama içi satın alma</sub>
+    </td> 
+  </tr> 
+</table>
+  <br /> 
+  <table align="center"> 
+    <tr> <td align="center" width="100%">
+      <img src="https://github.com/user-attachments/assets/26cd992c-3868-4605-8b06-f09ce350cbd5" width="260"/> 
+      <br />
+      <br /> 
+      <sub><b>Profil Düzenleme Sayfası</b></sub> <br /> <sub> Kullanıcı adı, profil fotoğrafı ve kişisel bilgilerin düzenlenmesi</sub>
+    </td> 
+    </tr>
+  </table> 
+</div>
 
 ---
 
